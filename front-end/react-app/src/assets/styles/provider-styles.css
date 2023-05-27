@@ -1,0 +1,273 @@
+.text-brown {
+    color: #593C1C;
+  }
+
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css");
+
+body {
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.navbar-brand {
+  margin-left: 15px;
+}
+
+.app-name-navbar, .app-name-navbar:hover {
+  color: #A97B47;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.btn-register-nv {
+  background-color: #F7F0E9 !important;
+  border-color: #F7F0E9 !important;
+  color: #A97B47 !important;
+  width: 100px !important;
+  border-radius: 10px !important;
+  margin-right: 15px;
+  font-size: 18px !important;
+}
+
+.btn-login-nv {
+  background-color: #F7F0E9 !important;
+  border-color: #F7F0E9 !important;
+  color: #A97B47 !important;
+  width: 100px !important;
+  border-radius: 10px !important;
+  margin-right: 15px;
+  font-size: 18px !important;
+}
+
+.filter-section {
+  margin-top: 150px;
+}
+
+.product-container {
+  border-radius: 10px;
+}
+
+.product-refrence {
+  text-decoration: none;
+}
+
+.text-brown {
+  color: #593C1C;
+}
+
+.provider-since-date {
+  font-size: 18px;
+}
+
+.provider-since-date-container {
+  margin-top: 10px;
+}
+
+.footer {
+  background-color: #593C1C;
+  font-weight: 600;
+  text-align: center;
+  /* padding: 2px; */
+  width: 100vw;
+}
+
+.footer-txt {
+  color: #F5F5F5;
+  text-align: center;
+}
+
+.img-width {
+  width: 100%;
+}
+
+.recomended-section {
+  background: #fff;
+  border-radius: 15px;
+}
+
+.add-cart-button {
+  color: #593C1C !important;
+  border-color: #593C1C !important;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.add-cart-button:hover {
+  background-color: #593C1C !important;
+  color: white !important;
+  border-color: #593C1C !important;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.add-cart-button:disabled {
+  color: #909090 !important;
+  background-color: #F5F5F5 !important;
+  border-color: #909090 !important;
+}
+
+.product-stock-info {
+  color: #C82525;
+}
+
+.selection-section {
+  background: #f7f0e9;
+  border-radius: 15px;
+}
+
+.padding-left {
+  padding-left: 20px;
+}
+
+.search-form {
+  width: 30vw;
+}
+
+.search-input {
+  background: url(../img/Vector\ \(1\).png) 27vh center no-repeat;
+  background-color: #f7f0e9;
+  border: none;
+  border-top-right-radius: 15px; 
+  border-bottom-right-radius: 15px;
+}
+
+.search-input:focus {
+  background: url(../img/Vector\ \(1\).png) 27vh center no-repeat;
+  background-color: #f7f0e9;
+}
+
+.search-option {
+  background-color: #D8C1A8;
+  border-radius: 15px;
+}
+
+.search-option-item {
+  background-color: #D8C1A8; /*not needed, this part is only for giving border radius*/
+  /* border-radius: 15px !important;   */
+}
+
+.dropd {
+  background-color: #A97B47;
+  color: #593C1C;
+  border: none;
+}
+
+.dropd:focus {
+  background-color: #A97B47;
+  color: #593C1C;
+  border: none;
+}
+
+.dropd:hover {
+  background-color: #A97B47;
+  color: #593C1C;
+  border: none;
+}
+
+.sort-by {
+  margin-top: 3px;
+  margin-right: 20px;
+  font-weight: 800;
+}
+
+.sellected {
+  background: transparent;
+  /* background: #A97B47; */
+  color: #909090;
+  padding: 5px 20px;
+  margin-right: 20px;
+}
+
+.sellected:focus {
+  background: #A97B47;
+  color: #f5f5f5;
+  padding: 5px 20px;
+  /* margin-right: 20px; */
+}
+
+.sellected-2 {
+  background: transparent;
+  color: #909090;
+  padding: 5px 20px;
+}
+
+.sellected-2:focus {
+  background: #A97B47;
+  color: #f5f5f5;
+  padding: 5px 20px;
+}
+
+.sorting-section {
+  margin-right: 20px;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  display: none;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: green;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px green;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.mt-100{
+  margin-top: 100px;
+}
+.width-35{
+    width: 35vw;
+}
+.mt-10p{
+  margin-top: 10vh;
+}

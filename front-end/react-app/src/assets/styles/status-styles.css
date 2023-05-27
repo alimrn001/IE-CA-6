@@ -1,0 +1,63 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css");
+
+.navbar-brand {
+    margin-left: 15px;
+}
+
+.app-name-navbar {
+    color: #A97B47;
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.btn-register-nv {
+    background-color: #F7F0E9 !important;
+    border-color: #F7F0E9 !important;
+    color: #A97B47 !important;
+    width: 100px !important;
+    border-radius: 10px !important;
+    margin-right: 15px;
+    font-size: 18px !important;
+}
+
+.btn-login-nv {
+    background-color: #F7F0E9 !important;
+    border-color: #F7F0E9 !important;
+    color: #A97B47 !important;
+    width: 100px !important;
+    border-radius: 10px !important;
+    margin-right: 15px;
+    font-size: 18px !important;
+}
+
+.page-body {
+    background-color: #F7F0E9 !important;
+}
+
+.status-code {
+    color: #A97B47 !important;
+}
+
+.status-msg {
+    color: #A97B47;
+}
+
+.status-msg-2 {
+    color: #A97B47;
+}
+
+.home-btn {
+    background-color: #A97B47 !important;
+    border-color: #A97B47 !important;
+    color: white !important;
+}
+
+.footer-txt {
+    color: white;
+    text-align: center;
+    background-color: #593C1C;
+}
+
+.footer {
+    position: absolute;
+}
