@@ -26,7 +26,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper {
                             "    birthDate DATE not null,\n" +
                             "    email varchar(255) not null,\n" +
                             "    address varchar(255) not null,\n" +
-                            "    credit int not null default 0,\n" +
+                            "    credit int not null default 0\n" +
                             ");",
                     TABLE_NAME));
             st.execute(String.format("ALTER TABLE %s CHARACTER SET utf8 COLLATE utf8_general_ci;", TABLE_NAME));
