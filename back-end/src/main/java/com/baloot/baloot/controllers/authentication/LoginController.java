@@ -1,14 +1,12 @@
 package com.baloot.baloot.controllers.authentication;
 
-import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.services.authentication.LoginService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import com.baloot.baloot.domain.Baloot.Exceptions.LoginFailedException;
-import com.baloot.baloot.domain.Baloot.Exceptions.ForbiddenValueException;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.Map;
 
 @RestController

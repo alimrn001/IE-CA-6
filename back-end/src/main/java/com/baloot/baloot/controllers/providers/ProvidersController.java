@@ -3,10 +3,12 @@ package com.baloot.baloot.controllers.providers;
 import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
 import com.baloot.baloot.domain.Baloot.Provider.Provider;
-import com.baloot.baloot.services.authentication.LogoutService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.nio.file.ProviderNotFoundException;

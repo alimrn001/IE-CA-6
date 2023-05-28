@@ -1,26 +1,22 @@
 package com.baloot.baloot.services;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
+import com.baloot.baloot.HTTPReqHandler.HTTPReqHandler;
+import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.domain.Baloot.Comment.Comment;
 import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
 import com.baloot.baloot.domain.Baloot.DiscountCoupon.DiscountCoupon;
-import com.baloot.baloot.domain.Baloot.Exceptions.LoginFailedException;
 import com.baloot.baloot.domain.Baloot.Provider.Provider;
 import com.baloot.baloot.domain.Baloot.User.User;
 import com.baloot.baloot.domain.Baloot.Utilities.EmailParser;
 import com.baloot.baloot.domain.Baloot.Utilities.LocalDateAdapter;
-import com.baloot.baloot.HTTPReqHandler.HTTPReqHandler;
-import com.baloot.baloot.domain.Baloot.Baloot;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.time.LocalDate;
 
 public class BalootDataService {
 

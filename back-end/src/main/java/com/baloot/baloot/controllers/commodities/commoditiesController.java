@@ -1,14 +1,14 @@
 package com.baloot.baloot.controllers.commodities;
 
-import com.baloot.baloot.domain.Baloot.Comment.Comment;
-import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
 import com.baloot.baloot.domain.Baloot.Baloot;
+import com.baloot.baloot.domain.Baloot.Comment.Comment;
 import com.baloot.baloot.domain.Baloot.Commodity.*;
+import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
 import com.baloot.baloot.domain.Baloot.Exceptions.NoLoggedInUserException;
+import com.baloot.baloot.domain.Baloot.Exceptions.RatingOutOfRangeException;
 import com.baloot.baloot.domain.Baloot.Provider.Provider;
 import com.baloot.baloot.services.commodities.CommentService;
 import com.baloot.baloot.services.commodities.RecommendationService;
-import com.baloot.baloot.domain.Baloot.Exceptions.RatingOutOfRangeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
