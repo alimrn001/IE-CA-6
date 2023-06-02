@@ -1,5 +1,7 @@
 package com.baloot.baloot.models.Comment;
 
+import com.baloot.baloot.models.Commodity.Commodity;
+import com.baloot.baloot.models.User.User;
 import com.google.gson.annotations.SerializedName;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,9 +15,15 @@ public class Comment {
     private int commentId;
 
     @SerializedName(value = "userEmail") //needed ?
-    private String username;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
-    private int commodityId;
+    @ManyToOne
+    @JoinColumn(name = "COMMODITY_ID")
+    private Commodity commodity;
+
+//    private int commodityId;
 
     private String text;
 
@@ -30,12 +38,12 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setCommodityId(int commodityId) {
-        this.commodityId = commodityId;
+    public void setCommodity(Commodity commodity) {
+        this.commodity = commodity;
     }
 
     public void setText(String text) {
@@ -74,12 +82,12 @@ public class Comment {
         return commentId;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
-    public int getCommodityId() {
-        return commodityId;
+    public Commodity getCommodity() {
+        return commodity;
     }
 
     public String getText() {

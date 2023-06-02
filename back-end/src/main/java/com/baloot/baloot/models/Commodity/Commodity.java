@@ -19,7 +19,7 @@ public class Commodity {
 
     private int price;
 
-    @ManyToMany()
+    @ManyToMany
     @JoinTable(name = "commodity_has_category", joinColumns = @JoinColumn(name = "commodity_id"),inverseJoinColumns = @JoinColumn(name = "category_name"))
     private Set<Category> categories;
 
@@ -31,7 +31,7 @@ public class Commodity {
 
     private int numOfRatings;
 
-    @OneToMany
+    @OneToMany //(mappedBy = "commodity") //not sure ????!!!?!
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Comment> comments;
 
