@@ -6,6 +6,7 @@ import com.baloot.baloot.domain.Baloot.Exceptions.ForbiddenValueException;
 import com.baloot.baloot.domain.Baloot.Exceptions.NoLoggedInUserException;
 import com.baloot.baloot.services.BalootDataService;
 import com.baloot.baloot.services.commodities.FilterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -20,6 +21,8 @@ import java.util.Map;
 @SpringBootApplication
 @RestController
 public class BalootApplication {
+    @Autowired
+    private BalootService balootService;
 
     public static void main(String[] args) {
         try {

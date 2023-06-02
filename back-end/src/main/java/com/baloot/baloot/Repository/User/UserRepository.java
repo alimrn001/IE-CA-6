@@ -15,8 +15,4 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User getUserByEmail(String email);
 
-    User getLoggedInUser(); //??
-
-    List<User> getAll(); //??
-
 }

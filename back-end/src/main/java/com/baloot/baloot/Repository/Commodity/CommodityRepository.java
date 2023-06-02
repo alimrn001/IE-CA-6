@@ -11,7 +11,7 @@ import java.util.Set;
 
 public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 
-    List<Commodity> getAllCommodities(); //??
+    Commodity getCommodityById(int commodityId);
 
     List<Commodity> findByNameContaining(String name);
 
@@ -32,6 +32,16 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
     List<Commodity> findByCategoriesOrderByNameAsc(Category category);
 
     List<Commodity> findByCategoriesOrderByNameDesc(Category category);
+
+    List<Commodity> findByProviderId(int ProviderId);
+
+    List<Commodity> findByProviderIdOrderByNameAsc(int ProviderId);
+
+    List<Commodity> findByProviderIdOrderByNameDesc(int ProviderId);
+
+    List<Commodity> findByProviderIdOrderByPriceAsc(int ProviderId);
+
+    List<Commodity> findByProviderIdOrderByPriceDesc(int ProviderId);
 
     List<Commodity> findByProviderName(String providerName);
 
