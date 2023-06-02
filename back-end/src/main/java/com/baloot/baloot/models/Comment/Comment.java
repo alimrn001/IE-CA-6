@@ -23,8 +23,6 @@ public class Comment {
     @JoinColumn(name = "COMMODITY_ID")
     private Commodity commodity;
 
-//    private int commodityId;
-
     private String text;
 
     private LocalDate date;

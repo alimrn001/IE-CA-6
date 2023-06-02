@@ -1,12 +1,14 @@
 package com.baloot.baloot.models.Provider;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.baloot.baloot.models.Comment.Comment;
+import com.baloot.baloot.models.Commodity.Commodity;
+import jakarta.persistence.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
 public class Provider {
@@ -21,7 +23,10 @@ public class Provider {
 
     private String image;
 
-    //private ArrayList<Integer> commoditiesProvided;
+    @OneToMany //(mappedBy = "provider") //not sure ????!!!?!
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Commodity> commoditiesProvided;
+
 
     public void setId(int id) {
         this.id = id;
@@ -43,6 +48,10 @@ public class Provider {
         this.image = image;
     }
 
+    public void setCommoditiesProvided(Set<Commodity> commoditiesProvided) {
+        this.commoditiesProvided = commoditiesProvided;
+    }
+
     public int getId() {
         return id;
     }
@@ -61,6 +70,10 @@ public class Provider {
 
     public String getImage() {
         return image;
+    }
+
+    public Set<Commodity> getCommoditiesProvided() {
+        return commoditiesProvided;
     }
 
 }

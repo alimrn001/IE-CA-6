@@ -2,6 +2,7 @@ package com.baloot.baloot.models.Commodity;
 
 import com.baloot.baloot.models.Category.Category;
 import com.baloot.baloot.models.Comment.Comment;
+import com.baloot.baloot.models.Provider.Provider;
 import jakarta.persistence.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -15,7 +16,9 @@ public class Commodity {
 
     private String name;
 
-    private int providerId;
+    @ManyToOne
+    @JoinColumn(name = "PROVIDER_ID")
+    private Provider provider;
 
     private int price;
 
@@ -44,8 +47,8 @@ public class Commodity {
         this.name = name;
     }
 
-    public void setProviderId(int providerId) {
-        this.providerId = providerId;
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 
     public void setPrice(int price) {
@@ -72,6 +75,10 @@ public class Commodity {
         this.numOfRatings = numOfRatings;
     }
 
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
     public void addNewRating(int newRating) {
         this.rating = (((this.rating*this.numOfRatings) + newRating)/(this.numOfRatings+1));
         this.numOfRatings ++;
@@ -93,8 +100,8 @@ public class Commodity {
         return name;
     }
 
-    public int getProviderId() {
-        return providerId;
+    public Provider getProvider() {
+        return provider;
     }
 
     public int getPrice() {
