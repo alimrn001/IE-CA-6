@@ -6,6 +6,8 @@ import com.baloot.baloot.Repository.Provider.ProviderRepository;
 import com.baloot.baloot.Repository.User.UserRepository;
 import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.models.User.User;
+import com.baloot.baloot.models.Provider.Provider;
+import com.baloot.baloot.models.Commodity.Commodity;
 import com.baloot.baloot.domain.Baloot.Utilities.LocalDateAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,10 +51,12 @@ public class BalootService {
     }
 
     public void initializeDataBase(String usersAddr, String providersAddr, String commoditiesAddr, String commentsAddr, String discountCouponsURL) {
-        if(! commodityRepository.findAll().isEmpty())
-            return;
+//        if(! commodityRepository.findAll().isEmpty())
+//            return;
         try {
             retrieveUsersDataFromAPI(usersAddr);
+            retrieveProvidersDataFromAPI(providersAddr);
+            retrieveCommoditiesDataFromAPI(commoditiesURL);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -68,5 +72,29 @@ public class BalootService {
             userRepository.save(user);
         }
     }
+
+    private void retrieveProvidersDataFromAPI(String url) throws Exception {
+        String providerDataJsonStr = new HTTPReqHandler().httpGetRequest(url);
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Type providerListType = new TypeToken<ArrayList<Provider>>(){}.getType();
+        List<Provider> providerList = gson.fromJson(providerDataJsonStr, providerListType);
+        for(Provider provider : providerList) {
+            providerRepository.save(provider);
+        }
+    }
+
+    private void retrieveCommoditiesDataFromAPI(String url) throws Exception {
+        String commodityDataJsonStr = new HTTPReqHandler().httpGetRequest(url);
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Type commodityListType = new TypeToken<ArrayList<Commodity>>(){}.getType();
+        List<Commodity> commodityList = gson.fromJson(commodityDataJsonStr, commodityListType);
+        System.out.println(commodityList.get(5).getId());
+        for(Commodity commodity : commodityList) {
+            System.out.println("id is : " + commodity.getId());
+            commodityRepository.save(commodity);
+        }
+    }
+
+
 
 }

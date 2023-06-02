@@ -1,8 +1,9 @@
 package com.baloot.baloot.models.Commodity;
 
-import com.baloot.baloot.models.Category.Category;
+//import com.baloot.baloot.models.Category.Category;
 import com.baloot.baloot.models.Comment.Comment;
 import com.baloot.baloot.models.Provider.Provider;
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -16,15 +17,17 @@ public class Commodity {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "PROVIDER_ID")
-    private Provider provider;
+//    @ManyToOne
+//    @JoinColumn(name = "PROVIDER_ID")
+//    private Provider provider;
+
+    private int providerId;
 
     private int price;
 
-    @ManyToMany
-    @JoinTable(name = "commodity_has_category", joinColumns = @JoinColumn(name = "commodity_id"),inverseJoinColumns = @JoinColumn(name = "category_name"))
-    private Set<Category> categories;
+    @ElementCollection(targetClass = String.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<String> categories;
 
     private double rating;
 
@@ -47,15 +50,15 @@ public class Commodity {
         this.name = name;
     }
 
-    public void setProvider(Provider provider) {
-        this.provider = provider;
+    public void setProviderId(int providerId) {
+        this.providerId = providerId;
     }
 
     public void setPrice(int price) {
         this.price = price;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Set<String> categories) {
         this.categories = categories;
     }
 
@@ -100,15 +103,15 @@ public class Commodity {
         return name;
     }
 
-    public Provider getProvider() {
-        return provider;
+    public int getProviderId() {
+        return providerId;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public Set<Category> getCategories() {
+    public Set<String> getCategories() {
         return categories;
     }
 
@@ -132,7 +135,7 @@ public class Commodity {
         return numOfRatings;
     }
 
-    public boolean hasCategory(Category category) {
+    public boolean hasCategory(String category) {
         return categories.contains(category);
     }
 

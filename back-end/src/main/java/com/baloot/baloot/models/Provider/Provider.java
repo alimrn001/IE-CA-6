@@ -21,6 +21,8 @@ public class Provider {
 
     private double avgCommoditiesRate;
 
+    private int commoditiesNum;
+
     private String image;
 
     @OneToMany //(mappedBy = "provider") //not sure ????!!!?!
@@ -44,12 +46,25 @@ public class Provider {
         this.avgCommoditiesRate = avgCommoditiesRate;
     }
 
+    public void setCommoditiesNum(int commoditiesNum) {
+        this.commoditiesNum = commoditiesNum;
+    }
+
     public void setImage(String image) {
         this.image = image;
     }
 
     public void setCommoditiesProvided(Set<Commodity> commoditiesProvided) {
         this.commoditiesProvided = commoditiesProvided;
+    }
+
+    public void updateCommoditiesData(double newCommodityRating) {
+        this.commoditiesNum ++;
+        this.avgCommoditiesRate = ((this.avgCommoditiesRate*(this.commoditiesNum-1)) + newCommodityRating)/(this.commoditiesNum);
+    }
+
+    public void addProvidedCommodity(Commodity commodity) {
+        commoditiesProvided.add(commodity);
     }
 
     public int getId() {
@@ -70,6 +85,10 @@ public class Provider {
 
     public String getImage() {
         return image;
+    }
+
+    public int getCommoditiesNum() {
+        return commoditiesNum;
     }
 
     public Set<Commodity> getCommoditiesProvided() {
