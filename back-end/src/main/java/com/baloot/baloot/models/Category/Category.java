@@ -8,6 +8,7 @@
 //import jakarta.persistence.*;
 //
 //import java.util.ArrayList;
+//import java.util.HashSet;
 //import java.util.Set;
 //@Entity
 //public class Category {
@@ -17,7 +18,14 @@
 //    private String categoryName;
 //
 //    @ManyToMany(mappedBy = "categories")
-//    private Set<Commodity> commodities;
+//    private Set<Commodity> commodities = new HashSet<>();
+//
+//
+//    public Category() {}
+//
+//    public Category(String categoryName) {
+//        this.categoryName = categoryName;
+//    }
 //
 //    public void setCategoryName(String categoryName) {
 //        this.categoryName = categoryName;

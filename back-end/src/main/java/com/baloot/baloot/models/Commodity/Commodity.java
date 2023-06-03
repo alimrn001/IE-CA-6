@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,8 @@ public class Commodity {
 
     @ElementCollection(targetClass = String.class)
     @LazyCollection(LazyCollectionOption.FALSE)
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(joinColumns = {@JoinColumn(name = "id")}, inverseJoinColumns = {@JoinColumn(name = "categoryId")})
     private Set<String> categories;
 
     private double rating;
@@ -39,8 +42,8 @@ public class Commodity {
     private int numOfRatings;
 
     @OneToMany //(mappedBy = "commodity") //not sure ????!!!?!
-    @JoinColumn(name = "id")
-    private Set<Comment> comments;
+    @JoinColumn(name = "commodity_id")
+    private Set<Comment> comments = new HashSet<>();
 
 
     public Commodity(int id, String name, Provider provider, int price, double rating, int inStock, String image) {
@@ -71,7 +74,6 @@ public class Commodity {
     public void setPrice(int price) {
         this.price = price;
     }
-
     public void setCategories(Set<String> categories) {
         this.categories = categories;
     }

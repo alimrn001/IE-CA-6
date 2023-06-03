@@ -8,6 +8,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,9 +27,8 @@ public class Provider {
     private String image;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "providerId")
-    private Set<Commodity> commoditiesProvided;
+    private Set<Commodity> commoditiesProvided = new HashSet<>();
 
 
     public void setId(int id) {
