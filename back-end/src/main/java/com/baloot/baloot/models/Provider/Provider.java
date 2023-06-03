@@ -25,8 +25,9 @@ public class Provider {
 
     private String image;
 
-    @OneToMany //(mappedBy = "provider") //not sure ????!!!?!
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "providerId")
     private Set<Commodity> commoditiesProvided;
 
 

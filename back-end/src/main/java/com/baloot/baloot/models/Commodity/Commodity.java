@@ -17,11 +17,12 @@ public class Commodity {
 
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "PROVIDER_ID")
-//    private Provider provider;
-
+    @Column(insertable = false, updatable = false)
     private int providerId;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "providerId")
+    private Provider provider;
 
     private int price;
 
@@ -41,6 +42,19 @@ public class Commodity {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Comment> comments;
 
+
+    public Commodity(int id, String name, Provider provider, int price, double rating, int inStock, String image) {
+        this.id = id;
+        this.name = name;
+        this.provider = provider;
+        this.price = price;
+        this.rating = rating;
+        this.inStock = inStock;
+        this.image = image;
+        this.numOfRatings = 0;
+    }
+
+    public Commodity() {}
 
     public void setId(int id) {
         this.id = id;
@@ -78,6 +92,10 @@ public class Commodity {
         this.numOfRatings = numOfRatings;
     }
 
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
@@ -105,6 +123,10 @@ public class Commodity {
 
     public int getProviderId() {
         return providerId;
+    }
+
+    public Provider getProvider() {
+        return provider;
     }
 
     public int getPrice() {

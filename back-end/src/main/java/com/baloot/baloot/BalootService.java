@@ -1,10 +1,13 @@
 package com.baloot.baloot;
 
 import com.baloot.baloot.HTTPReqHandler.HTTPReqHandler;
+import com.baloot.baloot.Repository.Comment.CommentRepository;
 import com.baloot.baloot.Repository.Commodity.CommodityRepository;
 import com.baloot.baloot.Repository.Provider.ProviderRepository;
 import com.baloot.baloot.Repository.User.UserRepository;
 import com.baloot.baloot.domain.Baloot.Baloot;
+import com.baloot.baloot.models.Comment.Comment;
+import com.baloot.baloot.domain.Baloot.Utilities.EmailParser;
 import com.baloot.baloot.models.User.User;
 import com.baloot.baloot.models.Provider.Provider;
 import com.baloot.baloot.models.Commodity.Commodity;
@@ -41,12 +44,14 @@ public class BalootService {
 
     private final CommodityRepository commodityRepository;
 
+    private final CommentRepository commentRepository;
+
     @Autowired
-    private BalootService(UserRepository userRepository_, ProviderRepository providerRepository_, CommodityRepository commodityRepository_) {
+    private BalootService(UserRepository userRepository_, ProviderRepository providerRepository_, CommodityRepository commodityRepository_, CommentRepository commentRepository_) {
         userRepository       = userRepository_;
         providerRepository   = providerRepository_;
         commodityRepository  = commodityRepository_;
-
+        commentRepository    = commentRepository_;
         initializeDataBase(usersURL, providersURL, commoditiesURL, commentsURL, discountCouponsURL);
     }
 
@@ -56,7 +61,9 @@ public class BalootService {
         try {
             retrieveUsersDataFromAPI(usersAddr);
             retrieveProvidersDataFromAPI(providersAddr);
-            retrieveCommoditiesDataFromAPI(commoditiesURL);
+            System.out.println(providerRepository.getProviderById(1).getName() + " is name");
+            retrieveCommoditiesDataFromAPI(commoditiesAddr);
+//            retrieveCommentsDataFromAPI(commentsAddr);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -85,16 +92,28 @@ public class BalootService {
 
     private void retrieveCommoditiesDataFromAPI(String url) throws Exception {
         String commodityDataJsonStr = new HTTPReqHandler().httpGetRequest(url);
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Gson gson = new GsonBuilder()
+                //.excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
         Type commodityListType = new TypeToken<ArrayList<Commodity>>(){}.getType();
         List<Commodity> commodityList = gson.fromJson(commodityDataJsonStr, commodityListType);
-        System.out.println(commodityList.get(5).getId());
+        System.out.println(commodityList.get(20).getProviderId());
         for(Commodity commodity : commodityList) {
-            System.out.println("id is : " + commodity.getId());
+            System.out.println("p id is : " + commodity.getProviderId());
+            commodity.setProvider(providerRepository.getProviderById(commodity.getProviderId()));
             commodityRepository.save(commodity);
         }
     }
 
-
+    private void retrieveCommentsDataFromAPI(String url) throws Exception {
+        String commentsDataJsonStr = new HTTPReqHandler().httpGetRequest(url);
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+        Type commentListType = new TypeToken<ArrayList<Comment>>(){}.getType();
+        List<Comment> commentList = gson.fromJson(commentsDataJsonStr, commentListType);
+        for(Comment comment : commentList) {
+//            comment.setUsername(new EmailParser().getEmailUsername(comment.getUsername()));
+            commentRepository.save(comment);
+        }
+    }
 
 }
