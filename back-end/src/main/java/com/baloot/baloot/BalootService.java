@@ -56,14 +56,22 @@ public class BalootService {
     }
 
     public void initializeDataBase(String usersAddr, String providersAddr, String commoditiesAddr, String commentsAddr, String discountCouponsURL) {
-//        if(! commodityRepository.findAll().isEmpty())
+        boolean readData = true;
+        if(! commodityRepository.findAll().isEmpty()) {
+            readData = false;
 //            return;
+        }
         try {
-            retrieveUsersDataFromAPI(usersAddr);
-            retrieveProvidersDataFromAPI(providersAddr);
-            System.out.println(providerRepository.getProviderById(1).getName() + " is name");
-            retrieveCommoditiesDataFromAPI(commoditiesAddr);
-//            retrieveCommentsDataFromAPI(commentsAddr);
+            if(readData) {
+                retrieveUsersDataFromAPI(usersAddr);
+                retrieveProvidersDataFromAPI(providersAddr);
+                System.out.println(providerRepository.getProviderById(1).getName() + " is name");
+                retrieveCommoditiesDataFromAPI(commoditiesAddr);
+                retrieveCommentsDataFromAPI(commentsAddr);
+            }
+            else {
+                retrieveCommentsDataFromAPI(commentsAddr);
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -111,7 +119,11 @@ public class BalootService {
         Type commentListType = new TypeToken<ArrayList<Comment>>(){}.getType();
         List<Comment> commentList = gson.fromJson(commentsDataJsonStr, commentListType);
         for(Comment comment : commentList) {
-//            comment.setUsername(new EmailParser().getEmailUsername(comment.getUsername()));
+            comment.setCommodity(commodityRepository.getCommodityById(comment.getCommodityId()));
+            comment.setDate("2022-11-11");
+            comment.setText("sample");
+            comment.setUsername(new EmailParser().getEmailUsername(comment.getUsername()));
+            comment.setUser(userRepository.getUserByUsername(comment.getUsername()));
             commentRepository.save(comment);
         }
     }

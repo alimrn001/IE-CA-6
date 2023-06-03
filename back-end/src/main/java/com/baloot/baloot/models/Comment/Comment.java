@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Comment {
@@ -15,25 +17,67 @@ public class Comment {
     private int commentId;
 
     @SerializedName(value = "userEmail") //needed ?
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @Transient
+    private String username;
 
-    @ManyToOne
-    @JoinColumn(name = "COMMODITY_ID")
-    private Commodity commodity;
+    @Transient
+    private int commodityId;
 
     private String text;
 
-    private LocalDate date;
+    private String date;
 
-    private int likesNo;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private int dislikesNo;
+    @ManyToOne
+    @JoinColumn(name = "commodity_id")
+    private Commodity commodity;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "commentId")
+    private Set<Vote> votes = new HashSet<>();
+
+
+//    private int likesNo;
+//
+//    private int dislikesNo;
+
+    public Comment() {}
+
+    public Comment(String username, int commodityId, String text, String date) {
+        this.username=username;
+        this.commodityId=commodityId;
+        this.text=text;
+        this.date=date;
+    }
+
+    public Comment(User user, Commodity commodity, String text, String date) {
+        this.user=user;
+        this.commodity = commodity;
+        this.text = text;
+        this.date = date;
+    }
 
     public void setCommentId(int commentId) {
         this.commentId = commentId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setCommodityId(int commodityId) {
+        this.commodityId = commodityId;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setVotes(Set<Vote> votes) {
+        this.votes = votes;
     }
 
     public void setUser(User user) {
@@ -48,36 +92,41 @@ public class Comment {
         this.text = text;
     }
 
-    public void setDate(String date) {
-        this.date = LocalDate.parse(date);
-    }
 
-    public void setLikesNo(int likesNo) {
-        this.likesNo = likesNo;
-    }
-
-    public void setDislikesNo(int dislikesNo) {
-        this.dislikesNo = dislikesNo;
-    }
-
-    public void addLike() {
-        likesNo++;
-    }
-
-    public void removeLike() {
-        likesNo--;
-    }
-
-    public void addDislike() {
-        dislikesNo++;
-    }
-
-    public void removeDislike() {
-        dislikesNo--;
-    }
+//    public void setLikesNo(int likesNo) {
+//        this.likesNo = likesNo;
+//    }
+//
+//    public void setDislikesNo(int dislikesNo) {
+//        this.dislikesNo = dislikesNo;
+//    }
+//
+//    public void addLike() {
+//        likesNo++;
+//    }
+//
+//    public void removeLike() {
+//        likesNo--;
+//    }
+//
+//    public void addDislike() {
+//        dislikesNo++;
+//    }
+//
+//    public void removeDislike() {
+//        dislikesNo--;
+//    }
 
     public int getCommentId() {
         return commentId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public int getCommodityId() {
+        return commodityId;
     }
 
     public User getUser() {
@@ -92,16 +141,20 @@ public class Comment {
         return text;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public int getLikesNo() {
-        return likesNo;
+    public Set<Vote> getVotes() {
+        return votes;
     }
 
-    public int getDislikesNo() {
-        return dislikesNo;
-    }
+    //    public int getLikesNo() {
+//        return likesNo;
+//    }
+//
+//    public int getDislikesNo() {
+//        return dislikesNo;
+//    }
 
 }

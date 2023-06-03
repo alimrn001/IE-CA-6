@@ -39,7 +39,7 @@ public class Commodity {
     private int numOfRatings;
 
     @OneToMany //(mappedBy = "commodity") //not sure ????!!!?!
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "id")
     private Set<Comment> comments;
 
 

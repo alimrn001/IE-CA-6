@@ -24,17 +24,17 @@ public class User {
 
     private int credit;
 
-    @OneToMany //(mappedBy = "user") //not sure
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Comment> postedComments;
-
-    @OneToMany //(mappedBy = "user") //not sure
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Comment> likedComments;
-
-    @OneToMany //(mappedBy = "user") //not sure
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Comment> dislikedComments;
+//    @OneToMany //(mappedBy = "user") //not sure
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private Set<Comment> postedComments;
+//
+//    @OneToMany //(mappedBy = "user") //not sure
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private Set<Comment> likedComments;
+//
+//    @OneToMany //(mappedBy = "user") //not sure
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    private Set<Comment> dislikedComments;
 
 //    private ArrayList<Integer> buyList;
 
@@ -67,29 +67,29 @@ public class User {
         this.credit = credit;
     }
 
-    public void setPostedComments(Set<Comment> postedComments) {
-        this.postedComments = postedComments;
-    }
-
-    public void setLikedComments(Set<Comment> likedComments) {
-        this.likedComments = likedComments;
-    }
-
-    public void setDislikedComments(Set<Comment> dislikedComments) {
-        this.dislikedComments = dislikedComments;
-    }
-
-    public void addToPostedComments(Comment comment) {
-        postedComments.add(comment);
-    }
-
-    public void addToLikedComments(Comment comment) {
-        likedComments.add(comment);
-    }
-
-    public void addToDislikedComments(Comment comment) {
-        dislikedComments.add(comment);
-    }
+//    public void setPostedComments(Set<Comment> postedComments) {
+//        this.postedComments = postedComments;
+//    }
+//
+//    public void setLikedComments(Set<Comment> likedComments) {
+//        this.likedComments = likedComments;
+//    }
+//
+//    public void setDislikedComments(Set<Comment> dislikedComments) {
+//        this.dislikedComments = dislikedComments;
+//    }
+//
+//    public void addToPostedComments(Comment comment) {
+//        postedComments.add(comment);
+//    }
+//
+//    public void addToLikedComments(Comment comment) {
+//        likedComments.add(comment);
+//    }
+//
+//    public void addToDislikedComments(Comment comment) {
+//        dislikedComments.add(comment);
+//    }
 
     public String getUsername() {
         return username;
@@ -115,16 +115,16 @@ public class User {
         return credit;
     }
 
-    public Set<Comment> getPostedComments() {
-        return postedComments;
-    }
-
-    public Set<Comment> getLikedComments() {
-        return likedComments;
-    }
-
-    public Set<Comment> getDislikedComments() {
-        return dislikedComments;
-    }
+//    public Set<Comment> getPostedComments() {
+//        return postedComments;
+//    }
+//
+//    public Set<Comment> getLikedComments() {
+//        return likedComments;
+//    }
+//
+//    public Set<Comment> getDislikedComments() {
+//        return dislikedComments;
+//    }
 
 }
