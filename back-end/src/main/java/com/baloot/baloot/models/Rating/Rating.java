@@ -8,17 +8,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.*;
 
 @Entity
+@IdClass(RatingKey.class)
 public class Rating {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long ratingId;
-
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "username")
     private User user;
 
+    @Id
     @ManyToOne
-    @JoinColumn(name = "commodityId")
+    @JoinColumn(name = "id")
     private Commodity commodity;
 
     @Column(nullable = false)
@@ -33,10 +32,6 @@ public class Rating {
         this.score = score;
     }
 
-    public void setRatingId(long ratingId) {
-        this.ratingId = ratingId;
-    }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -47,10 +42,6 @@ public class Rating {
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public long getRatingId() {
-        return ratingId;
     }
 
     public User getUser() {

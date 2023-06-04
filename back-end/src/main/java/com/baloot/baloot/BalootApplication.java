@@ -37,7 +37,8 @@ public class BalootApplication {
 
     @GetMapping("/")
     public ResponseEntity getBalootCommoditiesList() throws IOException {
-//        balootService.addUser("akbalknr", "1234", "202kjb2-11-10", "akbar@gmail.com", "akbar home");
+        balootService.addRating("akbar", 1, 8);
+        balootService.addRating("amir", 1, 3);
         if(!Baloot.getInstance().userIsLoggedIn()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
         }

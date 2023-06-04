@@ -15,4 +15,8 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     List<Rating> findRatingsByCommodity_Id(int commodityId);
 
+    long countByCommodity_Id(int commodityId);
+
+    long countByUserUsername(String username);
+
 }

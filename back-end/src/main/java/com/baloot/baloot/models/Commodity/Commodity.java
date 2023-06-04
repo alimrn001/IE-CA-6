@@ -54,10 +54,12 @@ public class Commodity {
         this.rating = rating;
         this.inStock = inStock;
         this.image = image;
-        this.numOfRatings = 0;
+        this.numOfRatings = 1;
     }
 
-    public Commodity() {}
+    public Commodity() {
+        this.numOfRatings = 1;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -74,6 +76,7 @@ public class Commodity {
     public void setPrice(int price) {
         this.price = price;
     }
+
     public void setCategories(Set<String> categories) {
         this.categories = categories;
     }
@@ -109,6 +112,15 @@ public class Commodity {
 
     public void updateUserRating(int previousRating, int newRating) {
         this.rating += ((double)(newRating - previousRating)/numOfRatings);
+    }
+
+    public void addNewRating(int newRating, int totalRatingsNumber) {
+        this.rating = (((this.rating*totalRatingsNumber) + newRating)/(totalRatingsNumber+1));
+        this.numOfRatings ++;
+    }
+
+    public void addExistingRating(int oldRating, int newRating, long totalRates) {
+        this.rating += ((double)(newRating - oldRating)/totalRates);
     }
 
     public void addComment(Comment comment) {

@@ -243,6 +243,14 @@ public class BalootService {
         return ratingRepository.getRatingByUserUsernameAndCommodity_Id(username, commodityId);
     }
 
+    public long getNumberOfCommodityRatings(int commodityId) {
+        return ratingRepository.countByCommodity_Id(commodityId);
+    }
+
+    public long getNumberOfUserRatings(String username) {
+        return ratingRepository.countByUserUsername(username);
+    }
+
     public void logout() {
         this.loggedInUser = null;
     }
@@ -254,6 +262,24 @@ public class BalootService {
     }
 
 
+    public void addRating(String username, int commodity_id, int score) {
+        ;
+        Rating oldRating = ratingRepository.getRatingByUserUsernameAndCommodity_Id(username, commodity_id);
+        Commodity commodity = commodityRepository.getCommodityById(commodity_id);
+        long totalRatings = getNumberOfCommodityRatings(commodity_id);
+        if(oldRating == null) {
+            Rating newRating = new Rating(getUserByUsername(username), getCommodityById(commodity_id), score);
+            ratingRepository.save(newRating);
+            commodity.addNewRating(newRating.getScore());
+        }
+        else {
+            System.out.println("here with old and new = " + oldRating.getScore() + score);
+            commodity.updateUserRating(oldRating.getScore(), score);
+            oldRating.setScore(score);
+            ratingRepository.save(oldRating);
+        }
+        commodityRepository.save(commodity);
+    }
 
 
 
