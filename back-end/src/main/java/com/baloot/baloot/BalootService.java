@@ -2,16 +2,24 @@ package com.baloot.baloot;
 
 import com.baloot.baloot.HTTPReqHandler.HTTPReqHandler;
 import com.baloot.baloot.Repository.Comment.CommentRepository;
+import com.baloot.baloot.Repository.Comment.VoteRepository;
 import com.baloot.baloot.Repository.Commodity.CommodityRepository;
+import com.baloot.baloot.Repository.DiscountCoupon.DiscountCouponRepository;
 import com.baloot.baloot.Repository.Provider.ProviderRepository;
+import com.baloot.baloot.Repository.Rating.RatingRepository;
 import com.baloot.baloot.Repository.User.UserRepository;
+
 import com.baloot.baloot.domain.Baloot.Baloot;
-import com.baloot.baloot.models.Comment.Comment;
 import com.baloot.baloot.domain.Baloot.Utilities.EmailParser;
+import com.baloot.baloot.domain.Baloot.Utilities.LocalDateAdapter;
+
+import com.baloot.baloot.models.DiscountCoupon.DiscountCoupon;
+import com.baloot.baloot.models.Comment.*;
 import com.baloot.baloot.models.User.User;
 import com.baloot.baloot.models.Provider.Provider;
 import com.baloot.baloot.models.Commodity.Commodity;
-import com.baloot.baloot.domain.Baloot.Utilities.LocalDateAdapter;
+import com.baloot.baloot.models.Rating.Rating;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -46,16 +54,28 @@ public class BalootService {
 
     private final CommentRepository commentRepository;
 
+    private final DiscountCouponRepository discountCouponRepository;
+
+    private final RatingRepository ratingRepository;
+
+    private final VoteRepository voteRepository;
+
     @Autowired
-    private BalootService(UserRepository userRepository_, ProviderRepository providerRepository_, CommodityRepository commodityRepository_, CommentRepository commentRepository_) {
+    private BalootService(UserRepository userRepository_, ProviderRepository providerRepository_,
+                          CommodityRepository commodityRepository_, CommentRepository commentRepository_,
+                          DiscountCouponRepository discountCouponRepository_ , RatingRepository ratingRepository_,
+                          VoteRepository voteRepository_) {
         userRepository       = userRepository_;
         providerRepository   = providerRepository_;
         commodityRepository  = commodityRepository_;
         commentRepository    = commentRepository_;
+        discountCouponRepository = discountCouponRepository_;
+        ratingRepository = ratingRepository_;
+        voteRepository = voteRepository_;
         initializeDataBase(usersURL, providersURL, commoditiesURL, commentsURL, discountCouponsURL);
     }
 
-    public void initializeDataBase(String usersAddr, String providersAddr, String commoditiesAddr, String commentsAddr, String discountCouponsURL) {
+    public void initializeDataBase(String usersAddr, String providersAddr, String commoditiesAddr, String commentsAddr, String discountCouponsAddr) {
         boolean readData = true;
         if(! commodityRepository.findAll().isEmpty()) {
             readData = false;
@@ -68,9 +88,11 @@ public class BalootService {
                 System.out.println(providerRepository.getProviderById(1).getName() + " is name");
                 retrieveCommoditiesDataFromAPI(commoditiesAddr);
                 retrieveCommentsDataFromAPI(commentsAddr);
+                retrieveDiscountsDataFromAPI(discountCouponsAddr);
             }
             else {
-                retrieveCommentsDataFromAPI(commentsAddr);
+                //retrieveCommentsDataFromAPI(commentsAddr);
+                retrieveDiscountsDataFromAPI(discountCouponsAddr);
             }
         }
         catch (Exception e) {
@@ -102,7 +124,8 @@ public class BalootService {
         String commodityDataJsonStr = new HTTPReqHandler().httpGetRequest(url);
         Gson gson = new GsonBuilder()
                 //.excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
         Type commodityListType = new TypeToken<ArrayList<Commodity>>(){}.getType();
         List<Commodity> commodityList = gson.fromJson(commodityDataJsonStr, commodityListType);
         System.out.println(commodityList.get(20).getProviderId());
@@ -125,6 +148,18 @@ public class BalootService {
             comment.setUsername(new EmailParser().getEmailUsername(comment.getUsername()));
             comment.setUser(userRepository.getUserByUsername(comment.getUsername()));
             commentRepository.save(comment);
+        }
+    }
+
+    private void retrieveDiscountsDataFromAPI(String url) throws Exception {
+        String discountsDataJsonStr = new HTTPReqHandler().httpGetRequest(url);
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
+        Type discountListType = new TypeToken<ArrayList<DiscountCoupon>>(){}.getType();
+        List<DiscountCoupon> discountList = gson.fromJson(discountsDataJsonStr, discountListType);
+        for(DiscountCoupon discountCoupon : discountList) {
+            discountCouponRepository.save(discountCoupon);
         }
     }
 

@@ -1,11 +1,13 @@
 package com.baloot.baloot.models.User;
 import com.baloot.baloot.models.Comment.Comment;
+import com.baloot.baloot.models.DiscountCoupon.DiscountCoupon;
 import jakarta.persistence.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,6 +25,21 @@ public class User {
     private String address;
 
     private int credit;
+
+    @ManyToMany(mappedBy = "discountUsers")
+    private Set<DiscountCoupon> usedDiscounts = new HashSet<>();
+
+
+    public User() {}
+
+    public User(String username, String password, LocalDate birthDate, String email, String address, int credit) {
+        this.username = username;
+        this.password = password;
+        this.birthDate = birthDate;
+        this.email = email;
+        this.address = address;
+        this.credit = credit;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -48,6 +65,10 @@ public class User {
         this.credit = credit;
     }
 
+    public void setUsedDiscounts(Set<DiscountCoupon> usedDiscounts) {
+        this.usedDiscounts = usedDiscounts;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -70,6 +91,10 @@ public class User {
 
     public int getCredit() {
         return credit;
+    }
+
+    public Set<DiscountCoupon> getUsedDiscounts() {
+        return usedDiscounts;
     }
 
 }

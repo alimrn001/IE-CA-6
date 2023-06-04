@@ -92,31 +92,6 @@ public class Comment {
         this.text = text;
     }
 
-
-//    public void setLikesNo(int likesNo) {
-//        this.likesNo = likesNo;
-//    }
-//
-//    public void setDislikesNo(int dislikesNo) {
-//        this.dislikesNo = dislikesNo;
-//    }
-//
-//    public void addLike() {
-//        likesNo++;
-//    }
-//
-//    public void removeLike() {
-//        likesNo--;
-//    }
-//
-//    public void addDislike() {
-//        dislikesNo++;
-//    }
-//
-//    public void removeDislike() {
-//        dislikesNo--;
-//    }
-
     public int getCommentId() {
         return commentId;
     }
@@ -148,13 +123,5 @@ public class Comment {
     public Set<Vote> getVotes() {
         return votes;
     }
-
-    //    public int getLikesNo() {
-//        return likesNo;
-//    }
-//
-//    public int getDislikesNo() {
-//        return dislikesNo;
-//    }
 
 }
