@@ -24,18 +24,18 @@ public class BuyListItem {
 
     private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
 
     private boolean isBought = false;
 
 
     public BuyListItem() {}
 
-    public BuyListItem(User user, Commodity commodity, BuyList buyList, Integer quantity) {
+    public BuyListItem(Commodity commodity, BuyList buyList, Integer quantity) {
         this.commodity = commodity;
-        this.user = user;
+//        this.user = user;
         this.buyList = buyList;
         this.quantity = quantity;
         this.isBought = false;
@@ -57,9 +57,9 @@ public class BuyListItem {
         this.buyList = buyList;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     public void setId(long buyListItemId) {
         this.buyListItemId = buyListItemId;
@@ -101,9 +101,9 @@ public class BuyListItem {
         return commodity.getPrice() * quantity;
     }
 
-    public User getUser() {
-        return user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
 
     public long getBuyListItemId() {
         return buyListItemId;

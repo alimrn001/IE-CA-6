@@ -14,24 +14,14 @@ public class BuyList {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long buyListId;
 
-//    @OneToMany(mappedBy = "buyList", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<BuyListItem> items = new HashSet<>();
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "BUY_LIST_COMMODITIES", joinColumns = @JoinColumn(name = "buyListId"),
                 inverseJoinColumns = @JoinColumn(name = "buyListItemId"))
     Set<BuyListItem> buyListItems = new HashSet<>();
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "discount_coupon_id")
-//    private DiscountCoupon discountCoupon;
-//
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;
-
-
-//    public BuyList() {}
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
     public void setBuyListId(long buyListId) {
@@ -109,32 +99,5 @@ public class BuyList {
     public Set<BuyListItem> getBuyListItems() {
         return buyListItems;
     }
-
-    //    public void addItem(BuyListItem item) {
-//        item.setBuyList(this);
-//        this.items.add(item);
-//    }
-//
-//    public void removeItem(BuyListItem item) {
-//        this.items.remove(item);
-//        item.setBuyList(null);
-//    }
-//
-//    public Set<BuyListItem> getItems() {
-//        return items;
-//    }
-//
-//    public void setItems(Set<BuyListItem> items) {
-//        this.items = items;
-//    }
-//
-//    public DiscountCoupon getDiscountCoupon() {
-//        return discountCoupon;
-//    }
-//
-//    public void setDiscountCoupon(DiscountCoupon discountCoupon) {
-//        this.discountCoupon = discountCoupon;
-//    }
-
 
 }

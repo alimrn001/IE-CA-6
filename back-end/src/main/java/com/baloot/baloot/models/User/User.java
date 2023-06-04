@@ -32,6 +32,9 @@ public class User {
     @ManyToMany(mappedBy = "discountUsers")
     private Set<DiscountCoupon> usedDiscounts = new HashSet<>();
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private BuyList buyList;
+
 
     public User() {}
 
@@ -72,6 +75,10 @@ public class User {
         this.usedDiscounts = usedDiscounts;
     }
 
+    public void setBuyList(BuyList buyList) {
+        this.buyList = buyList;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -98,6 +105,10 @@ public class User {
 
     public Set<DiscountCoupon> getUsedDiscounts() {
         return usedDiscounts;
+    }
+
+    public BuyList getBuyList() {
+        return buyList;
     }
 
 }
