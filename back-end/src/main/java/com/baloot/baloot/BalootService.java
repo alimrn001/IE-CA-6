@@ -92,7 +92,7 @@ public class BalootService {
             }
             else {
                 //retrieveCommentsDataFromAPI(commentsAddr);
-                retrieveDiscountsDataFromAPI(discountCouponsAddr);
+//                retrieveDiscountsDataFromAPI(discountCouponsAddr);
             }
         }
         catch (Exception e) {
