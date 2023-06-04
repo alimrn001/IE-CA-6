@@ -15,6 +15,18 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 
     List<Commodity> findByNameContaining(String name);
 
+    List<Commodity> findAllByOrderByNameAsc();
+
+    List<Commodity> findAllByOrderByNameDesc();
+
+    List<Commodity> findAllByOrderByPriceAsc();
+
+    List<Commodity> findAllByOrderByPriceDesc();
+
+    List<Commodity> findAllByOrderByRatingAsc();
+
+    List<Commodity> findAllByOrderByRatingDesc();
+
     List<Commodity> findByNameContainingOrderByPriceAsc(String name);
 
     List<Commodity> findByNameContainingOrderByPriceDesc(String name);
@@ -23,7 +35,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 
     List<Commodity> findByNameContainingOrderByNameDesc(String name);
 
-    List<Commodity> findByCategories(String category);
+    List<Commodity> findByCategoriesContaining(String category);
 
     List<Commodity> findByCategoriesOrderByPriceAsc(String category);
 
@@ -43,14 +55,14 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 
     List<Commodity> findByProviderIdOrderByPriceDesc(int ProviderId);
 
-//    List<Commodity> findByProviderName(String providerName);
-//
-//    List<Commodity> findByProviderNameOrderByNameAsc(String providerName);
-//
-//    List<Commodity> findByProviderNameOrderByNameDesc(String providerName);
-//
-//    List<Commodity> findByProviderNameOrderByPriceAsc(String providerName);
-//
-//    List<Commodity> findByProviderNameOrderByPriceDesc(String providerName);
+    List<Commodity> findByProviderName(String providerName);
+
+    List<Commodity> findByProviderNameOrderByNameAsc(String providerName);
+
+    List<Commodity> findByProviderNameOrderByNameDesc(String providerName);
+
+    List<Commodity> findByProviderNameOrderByPriceAsc(String providerName);
+
+    List<Commodity> findByProviderNameOrderByPriceDesc(String providerName);
 
 }

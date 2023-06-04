@@ -44,7 +44,7 @@ public class BalootService {
 
     final static String discountCouponsURL = "http://5.253.25.110:5000/api/discount";
 
-    private String loggedInUser;
+    private User loggedInUser;
 
     private final UserRepository userRepository;
 
@@ -162,5 +162,100 @@ public class BalootService {
             discountCouponRepository.save(discountCoupon);
         }
     }
+
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.getUserByUsername(username);
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
+    }
+
+    public List<User> getUsersList() {
+        return userRepository.findAll();
+    }
+
+    public Provider getProviderById(int providerId) {
+        return providerRepository.getProviderById(providerId);
+    }
+
+    public List<Provider> getProvidersByName(String providerName) {
+        return providerRepository.findProvidersByNameContaining(providerName);
+    }
+
+    public List<Provider> getProvidersList() {
+        return providerRepository.findAll();
+    }
+
+    public List<Commodity> getCommoditiesList() {
+        return commodityRepository.findAll();
+    }
+
+    public Commodity getCommodityById(int commodityId) {
+        return commodityRepository.getCommodityById(commodityId);
+    }
+
+    public List<Comment> getCommentsList() {
+        return commentRepository.findAll();
+    }
+
+    public List<Commodity> getCommoditiesByOrderedByName(boolean isAsc) {
+        if(isAsc)
+            return commodityRepository.findAllByOrderByNameAsc();
+        return commodityRepository.findAllByOrderByNameDesc();
+    }
+
+    public List<Commodity> getCommoditiesByOrderedByPrice(boolean isAsc) {
+        if(isAsc)
+            return commodityRepository.findAllByOrderByPriceAsc();
+        return commodityRepository.findAllByOrderByPriceDesc();
+    }
+
+    public List<Commodity> getCommoditiesByProviderName(String providerName) {
+        return commodityRepository.findByProviderName(providerName);
+    }
+
+    public List<Commodity> getCommoditiesByCategory(String category) {
+        return commodityRepository.findByCategoriesContaining(category);
+    }
+
+    public List<Commodity> getCommoditiesByProviderId(int providerId) {
+        return commodityRepository.findByProviderId(providerId);
+    }
+
+    public Comment getCommentById(int commentId) {
+        return commentRepository.getCommentByCommentId(commentId);
+    }
+
+    public List<Comment> getUserComments(String username) {
+        return commentRepository.getCommentsByUserUsername(username);
+    }
+
+    public List<Comment> getCommodityComments(int commodityId) {
+        return commentRepository.getCommentsByCommodity_Id(commodityId);
+    }
+
+    public Rating getRating(String username, int commodityId) {
+        return ratingRepository.getRatingByUserUsernameAndCommodity_Id(username, commodityId);
+    }
+
+    public void logout() {
+        this.loggedInUser = null;
+    }
+
+    public void addUser(String username, String password, String birthDate, String email, String address) {
+        LocalDate birth = LocalDate.parse(birthDate);
+        User user = new User(username, password, birth, email, address, 0);
+        userRepository.save(user);
+    }
+
+
+
+
+
 
 }
