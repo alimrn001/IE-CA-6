@@ -1,4 +1,6 @@
 package com.baloot.baloot.models.User;
+import com.baloot.baloot.models.BuyList.BuyList;
+import com.baloot.baloot.models.BuyList.BuyListItem;
 import com.baloot.baloot.models.Comment.Comment;
 import com.baloot.baloot.models.DiscountCoupon.DiscountCoupon;
 import jakarta.persistence.*;
@@ -8,6 +10,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
