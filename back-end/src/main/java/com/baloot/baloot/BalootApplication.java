@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,8 +38,13 @@ public class BalootApplication {
 
     @GetMapping("/")
     public ResponseEntity getBalootCommoditiesList() throws IOException {
-        balootService.addRating("akbar", 1, 8);
-        balootService.addRating("amir", 1, 3);
+        balootService.addComment("akbar", 50, LocalDate.now().toString(), "this is a comment");
+        try {
+            balootService.addRating("amir", 1, 3);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         if(!Baloot.getInstance().userIsLoggedIn()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
         }
@@ -48,6 +54,7 @@ public class BalootApplication {
         map.put("commodities", allCommodities);
         return ResponseEntity.status(HttpStatus.OK).body(map);
     }
+
     @PostMapping("/")
     public ResponseEntity filterBalootCommodities(@RequestBody Map<String, Object> payLoad) throws IOException {
         if(!Baloot.getInstance().userIsLoggedIn()) {

@@ -10,6 +10,9 @@ import com.baloot.baloot.Repository.Rating.RatingRepository;
 import com.baloot.baloot.Repository.User.UserRepository;
 
 import com.baloot.baloot.domain.Baloot.Baloot;
+import com.baloot.baloot.domain.Baloot.Exceptions.ForbiddenValueException;
+import com.baloot.baloot.domain.Baloot.Exceptions.LoginFailedException;
+import com.baloot.baloot.domain.Baloot.Exceptions.RatingOutOfRangeException;
 import com.baloot.baloot.domain.Baloot.Utilities.EmailParser;
 import com.baloot.baloot.domain.Baloot.Utilities.LocalDateAdapter;
 
@@ -163,6 +166,10 @@ public class BalootService {
         }
     }
 
+    public boolean userIsLoggedIn() {
+        return loggedInUser != null;
+    }
+
     public User getLoggedInUser() {
         return loggedInUser;
     }
@@ -201,6 +208,10 @@ public class BalootService {
 
     public List<Comment> getCommentsList() {
         return commentRepository.findAll();
+    }
+
+    public List<Commodity> getBalootCommodities() {
+        return commodityRepository.findAll();
     }
 
     public List<Commodity> getCommoditiesByOrderedByName(boolean isAsc) {
@@ -261,12 +272,23 @@ public class BalootService {
         userRepository.save(user);
     }
 
+    public void login(String username, String password) throws Exception {
+        if(username==null || password==null)
+            throw new ForbiddenValueException();
+        User user = userRepository.getUserByUsername(username);
+        if(user==null)
+            throw new LoginFailedException();
+        if(!password.equals(user.getPassword()))
+            throw new LoginFailedException();
+        loggedInUser = user;
+    }
 
-    public void addRating(String username, int commodity_id, int score) {
-        ;
+    public void addRating(String username, int commodity_id, int score) throws Exception{
         Rating oldRating = ratingRepository.getRatingByUserUsernameAndCommodity_Id(username, commodity_id);
         Commodity commodity = commodityRepository.getCommodityById(commodity_id);
-        long totalRatings = getNumberOfCommodityRatings(commodity_id);
+        if(score < 1 || score > 10)
+            throw new RatingOutOfRangeException();
+
         if(oldRating == null) {
             Rating newRating = new Rating(getUserByUsername(username), getCommodityById(commodity_id), score);
             ratingRepository.save(newRating);
@@ -281,7 +303,12 @@ public class BalootService {
         commodityRepository.save(commodity);
     }
 
-
+    public void addComment(String username, int commodityId, String date, String text) {
+        Comment comment = new Comment(username, commodityId, text, date);
+        comment.setCommodityId(commodityId);
+        comment.setUsername(username);
+        commentRepository.save(comment);
+    }
 
 
 }

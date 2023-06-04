@@ -114,15 +114,6 @@ public class Commodity {
         this.rating += ((double)(newRating - previousRating)/numOfRatings);
     }
 
-    public void addNewRating(int newRating, int totalRatingsNumber) {
-        this.rating = (((this.rating*totalRatingsNumber) + newRating)/(totalRatingsNumber+1));
-        this.numOfRatings ++;
-    }
-
-    public void addExistingRating(int oldRating, int newRating, long totalRates) {
-        this.rating += ((double)(newRating - oldRating)/totalRates);
-    }
-
     public void addComment(Comment comment) {
         comments.add(comment);
     }
