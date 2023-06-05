@@ -21,7 +21,6 @@ public class LoginController {
     public ResponseEntity login(@RequestBody Map<String, Object> payLoad) {
         System.out.println("username and pass is : " + payLoad.get("username") + " - " + payLoad.get("password"));
         try {
-//            LoginService.handleLogin(payLoad.get("username").toString(), payLoad.get("password").toString());
             balootService.login(payLoad.get("username").toString(), payLoad.get("password").toString());
             return ResponseEntity.ok("ok");
         }

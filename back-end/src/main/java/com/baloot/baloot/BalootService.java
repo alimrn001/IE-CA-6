@@ -297,6 +297,16 @@ public class BalootService {
         userRepository.save(user);
     }
 
+    public void addCreditToUser(User user, int credit) {
+        user.addCredit(credit);
+        userRepository.save(user); //exceptions handled in service layer !
+    }
+
+    public void reduceCreditFromUser(User user, int credit) {
+        user.reduceCredit(credit);
+        userRepository.save(user); //exceptions handled in service layer !
+    }
+
     public void login(String username, String password) throws Exception {
         if(username==null || password==null)
             throw new ForbiddenValueException();

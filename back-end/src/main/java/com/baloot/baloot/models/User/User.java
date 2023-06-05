@@ -32,9 +32,6 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "discountUsers")
     private Set<DiscountCoupon> usedDiscounts = new HashSet<>();
 
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private BuyList buyList;
-//
 
     public User() {}
 
@@ -75,9 +72,13 @@ public class User {
         this.usedDiscounts = usedDiscounts;
     }
 
-//    public void setBuyList(BuyList buyList) {
-//        this.buyList = buyList;
-//    }
+    public void addCredit(int amount) {
+        this.credit += amount;
+    }
+
+    public void reduceCredit(int amount) {
+        this.credit -= amount;
+    }
 
     public String getUsername() {
         return username;
@@ -107,7 +108,4 @@ public class User {
         return usedDiscounts;
     }
 
-//    public BuyList getBuyList() {
-//        return buyList;
-//    }
 }

@@ -37,33 +37,14 @@ public class BalootApplication {
         catch (Exception e) {
             e.printStackTrace();
         }
-        //System.out.println("total users : " + Baloot.getInstance().getBalootUsers().size());
         SpringApplication.run(BalootApplication.class, args);
     }
 
     @GetMapping("/")
     public ResponseEntity getBalootCommoditiesList() throws IOException {
-//        balootService.addComment("akbar", 50, LocalDate.now().toString(), "this is a comment");
-//        try {
-//            balootService.voteComment("hamid", 1, 1);
-//            for(String category : balootService.getCommodityCategories(10))
-//                System.out.println(category);
-//            for(com.baloot.baloot.models.Commodity.Commodity commodity: balootService.getCommoditiesByCategory("Phone"))
-//                System.out.println(commodity.getName());
-//            System.out.println(commodityService.getAllCommodities().size() + " is total commodities");
-//
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        if(!Baloot.getInstance().userIsLoggedIn()) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
-//        }
         if(!balootService.userIsLoggedIn()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
         }
-
-//        Map<Integer, Commodity> allCommodities = Baloot.getInstance().getBalootCommodities();
         Map<Integer, CommodityDTO> allCommodities = commodityService.getAllCommodities();
         Map<String, Object> map = new HashMap<>();
         map.put("loggedInUsername", balootService.getLoggedInUser());
