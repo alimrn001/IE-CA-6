@@ -38,9 +38,9 @@ public class BalootApplication {
 
     @GetMapping("/")
     public ResponseEntity getBalootCommoditiesList() throws IOException {
-        balootService.addComment("akbar", 50, LocalDate.now().toString(), "this is a comment");
+//        balootService.addComment("akbar", 50, LocalDate.now().toString(), "this is a comment");
         try {
-            balootService.addRating("amir", 1, 3);
+//            balootService.voteComment("hamid", 1, 1);
         }
         catch (Exception e) {
             e.printStackTrace();

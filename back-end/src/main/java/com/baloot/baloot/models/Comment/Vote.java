@@ -9,16 +9,15 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@IdClass(VoteKey.class)
 public class Vote {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long voteId;
-
     @ManyToOne
     @JoinColumn(name = "commentId")
     private Comment comment;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
@@ -33,10 +32,6 @@ public class Vote {
 
     public Vote() {}
 
-    public void setVoteId(long voteId) {
-        this.voteId = voteId;
-    }
-
     public void setComment(Comment comment) {
         this.comment = comment;
     }
@@ -47,10 +42,6 @@ public class Vote {
 
     public void setVote(int vote) {
         this.vote = vote;
-    }
-
-    public long getVoteId() {
-        return voteId;
     }
 
     public Comment getComment() {

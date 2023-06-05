@@ -1,5 +1,6 @@
 package com.baloot.baloot.Repository.Comment;
 
+import com.baloot.baloot.models.Comment.Comment;
 import com.baloot.baloot.models.Comment.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -9,7 +10,7 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     Vote getVoteByCommentCommentIdAndUserUsername(int commentId, String username);
 
-    Vote getVoteByVoteId(long voteId);
+    List<Vote> findByComment(Comment comment);
 
     List<Vote> findVotesByComment_CommentId(int commentId);
 

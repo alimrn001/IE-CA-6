@@ -10,9 +10,7 @@ import com.baloot.baloot.Repository.Rating.RatingRepository;
 import com.baloot.baloot.Repository.User.UserRepository;
 
 import com.baloot.baloot.domain.Baloot.Baloot;
-import com.baloot.baloot.domain.Baloot.Exceptions.ForbiddenValueException;
-import com.baloot.baloot.domain.Baloot.Exceptions.LoginFailedException;
-import com.baloot.baloot.domain.Baloot.Exceptions.RatingOutOfRangeException;
+import com.baloot.baloot.domain.Baloot.Exceptions.*;
 import com.baloot.baloot.domain.Baloot.Utilities.EmailParser;
 import com.baloot.baloot.domain.Baloot.Utilities.LocalDateAdapter;
 
@@ -94,7 +92,7 @@ public class BalootService {
                 retrieveDiscountsDataFromAPI(discountCouponsAddr);
             }
             else {
-                //retrieveCommentsDataFromAPI(commentsAddr);
+                retrieveCommentsDataFromAPI(commentsAddr);
 //                retrieveDiscountsDataFromAPI(discountCouponsAddr);
             }
         }
@@ -266,7 +264,18 @@ public class BalootService {
         this.loggedInUser = null;
     }
 
-    public void addUser(String username, String password, String birthDate, String email, String address) {
+    public void checkUsernameValidity(String username) throws Exception {
+        boolean containsHalfSpace = username.contains("\u200C");
+        boolean containsSpace = username.contains(" ");
+        boolean containsAtSymbol = username.contains("@");
+        boolean containsHashSymbol = username.contains("#");
+        boolean containsExclamationSymbol = username.contains("!");
+        if(containsHalfSpace || containsSpace || containsAtSymbol || containsHashSymbol || containsExclamationSymbol)
+            throw new UsernameWrongCharacterException();
+    }
+
+    public void addUser(String username, String password, String birthDate, String email, String address) throws Exception {
+        checkUsernameValidity(username);
         LocalDate birth = LocalDate.parse(birthDate);
         User user = new User(username, password, birth, email, address, 0);
         userRepository.save(user);
@@ -295,7 +304,6 @@ public class BalootService {
             commodity.addNewRating(newRating.getScore());
         }
         else {
-            System.out.println("here with old and new = " + oldRating.getScore() + score);
             commodity.updateUserRating(oldRating.getScore(), score);
             oldRating.setScore(score);
             ratingRepository.save(oldRating);
@@ -303,12 +311,37 @@ public class BalootService {
         commodityRepository.save(commodity);
     }
 
-    public void addComment(String username, int commodityId, String date, String text) {
+    public void addComment(String username, int commodityId, String date, String text) throws Exception {
+        Commodity commodity = commodityRepository.getCommodityById(commodityId);
+        User user = userRepository.getUserByUsername(username);
+        if(text==null || text.equals(""))
+            throw new ForbiddenValueException();
+        if(user==null)
+            throw new UserNotExistsException();
+        if(commodity==null)
+            throw new CommodityNotExistsException();
         Comment comment = new Comment(username, commodityId, text, date);
         comment.setCommodityId(commodityId);
         comment.setUsername(username);
+        comment.setUser(user);
+        comment.setCommodity(commodity);
         commentRepository.save(comment);
     }
 
+    public void voteComment(String username, int commentId, int voteValue) throws Exception {
+        Vote oldVote = voteRepository.getVoteByCommentCommentIdAndUserUsername(commentId, username);
+        Comment comment = commentRepository.getCommentByCommentId(commentId);
+        User user = userRepository.getUserByUsername(username);
+        if(voteValue != 0 && voteValue != 1)
+            throw new WrongVoteValueException();
+        if(oldVote == null) {
+            Vote vote = new Vote(comment, user, voteValue);
+            voteRepository.save(vote);
+        }
+        else {
+            oldVote.setVote(voteValue);
+            voteRepository.save(oldVote);
+        }
+    }
 
 }

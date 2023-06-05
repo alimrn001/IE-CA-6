@@ -40,10 +40,6 @@ public class Comment {
     private Set<Vote> votes = new HashSet<>();
 
 
-//    private int likesNo;
-//
-//    private int dislikesNo;
-
     public Comment() {}
 
     public Comment(String username, int commodityId, String text, String date) {
