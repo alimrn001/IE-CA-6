@@ -204,6 +204,10 @@ public class BalootService {
         return commodityRepository.getCommodityById(commodityId);
     }
 
+    public List<String> getCommodityCategories(int commodityId) {
+        return commodityRepository.findCategoriesByCommodityId(commodityId);
+    }
+
     public List<Comment> getCommentsList() {
         return commentRepository.findAll();
     }
@@ -260,8 +264,20 @@ public class BalootService {
         return ratingRepository.countByUserUsername(username);
     }
 
-    public void logout() {
-        this.loggedInUser = null;
+    public long getNumberOfCommentLikes(Comment comment) {
+        return voteRepository.countByCommentAndVote(comment, 1);
+    }
+
+    public long getNumberOfCommentDislikes(Comment comment) {
+        return voteRepository.countByCommentAndVote(comment, 0);
+    }
+
+    public long getNumberOfCommentLikesById(int commentId) {
+        return voteRepository.countByComment_CommentIdAndVote(commentId, 1);
+    }
+
+    public long getNumberOfCommentDislikesById(int commentId) {
+        return voteRepository.countByComment_CommentIdAndVote(commentId, 0);
     }
 
     public void checkUsernameValidity(String username) throws Exception {
@@ -290,6 +306,10 @@ public class BalootService {
         if(!password.equals(user.getPassword()))
             throw new LoginFailedException();
         loggedInUser = user;
+    }
+
+    public void logout() {
+        this.loggedInUser = null;
     }
 
     public void addRating(String username, int commodity_id, int score) throws Exception{

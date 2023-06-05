@@ -3,6 +3,8 @@ package com.baloot.baloot.Repository.Commodity;
 //import com.baloot.baloot.models.Category.Category;
 import com.baloot.baloot.models.Commodity.Commodity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -12,6 +14,27 @@ import java.util.Set;
 public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 
     Commodity getCommodityById(int commodityId);
+
+//    @Query("SELECT c.categories as categories FROM Commodity c WHERE c.id = :commodityId")
+//    CommodityCategoryProjection findCategoriesById(@Param("commodityId") int commodityId);
+//
+//    List<CommodityCategoryProjection> findAllBy();
+
+
+    @Query(
+            value = "SELECT cc.categories FROM commodity_categories cc WHERE cc.commodity_id = :id",
+            nativeQuery = true
+    )
+    List<String> findCategoriesByCommodityId(@Param("id") int id);
+
+
+//    Set<String>
+
+//    Set<String> findCategoriesById(int commodityId);
+//
+//    default Set<String> findCategoriesByCommodity(Commodity commodity) {
+//        return findCategoriesById(commodity.getId());
+//    }
 
     List<Commodity> findByNameContaining(String name);
 

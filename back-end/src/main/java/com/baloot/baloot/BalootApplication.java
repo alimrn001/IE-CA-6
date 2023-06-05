@@ -41,6 +41,11 @@ public class BalootApplication {
 //        balootService.addComment("akbar", 50, LocalDate.now().toString(), "this is a comment");
         try {
 //            balootService.voteComment("hamid", 1, 1);
+            for(String category : balootService.getCommodityCategories(10))
+                System.out.println(category);
+            for(com.baloot.baloot.models.Commodity.Commodity commodity: balootService.getCommoditiesByCategory("Phone"))
+                System.out.println(commodity.getName());
+
         }
         catch (Exception e) {
             e.printStackTrace();
