@@ -43,11 +43,8 @@ public class ProvidersController {
         try {
             Map<String, Object> responseMap = new HashMap<>();
             String loggedInUsername = balootService.getLoggedInUser().getUsername();
-//            int cartSize = Baloot.getInstance().getBalootUser(loggedInUsername).getBuyList().size();
             int cartSize = 2; //for test cause there is still no buylist !
-//            Provider provider = Baloot.getInstance().getBalootProvider(Integer.parseInt(providerId));
             ProviderDTO provider = providerService.getBalootProvider(Integer.parseInt(providerId));
-//            List<Commodity> providedCommodities = Baloot.getInstance().getCommoditiesByIDList(provider.getCommoditiesProvided());
             List<CommodityDTO> providedCommodities = commodityService.getProviderCommodities(Integer.parseInt(providerId));
             responseMap.put("loggedInUsername", loggedInUsername);
             responseMap.put("sinceYear", provider.getRegistryDate().getYear());

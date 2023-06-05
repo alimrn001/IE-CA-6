@@ -216,6 +216,10 @@ public class BalootService {
         return commodityRepository.findAll();
     }
 
+    public List<Commodity> getCommoditiesByName(String name) {
+        return commodityRepository.findByNameContaining(name);
+    }
+
     public List<Commodity> getCommoditiesByOrderedByName(boolean isAsc) {
         if(isAsc)
             return commodityRepository.findAllByOrderByNameAsc();

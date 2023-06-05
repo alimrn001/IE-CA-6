@@ -32,19 +32,48 @@ public class CommodityService {
         return commodities;
     }
 
-    public List<CommodityDTO> getProviderCommodities(int providerId) {
-        List<Commodity> provided = balootService.getCommoditiesByProviderId(providerId);
-        List<CommodityDTO> providerCommodities = new ArrayList<>();
-        for (Commodity commodity : provided) {
+    public List<CommodityDTO> getCommodityDTOList(List<Commodity> commodities) {
+        List<CommodityDTO> result = new ArrayList<>();
+        for (Commodity commodity : commodities) {
             CommodityDTO commodityDTO = new CommodityDTO
                     (commodity.getId(), commodity.getName(),
                             commodity.getProviderId(), commodity.getPrice(),
                             commodity.getRating(), commodity.getInStock(),
                             commodity.getImage(), commodity.getNumOfRatings()); //no need to set comments here!
             commodityDTO.setCategories(new ArrayList<>(balootService.getCommodityCategories(commodity.getId())));
-            providerCommodities.add(commodityDTO);
+            result.add(commodityDTO);
         }
-        return providerCommodities;
+        return result;
+    }
+
+    public List<CommodityDTO> getProviderCommodities(int providerId) {
+        List<Commodity> provided = balootService.getCommoditiesByProviderId(providerId);
+        return getCommodityDTOList(provided);
+    }
+
+    public List<CommodityDTO> getCommoditiesByName(String name) {
+        List<Commodity> commodities = balootService.getCommoditiesByName(name);
+        return getCommodityDTOList(commodities);
+    }
+
+    public List<CommodityDTO> getCommoditiesByCategoryName(String category) {
+        List<Commodity> commodities = balootService.getCommoditiesByCategory(category);
+        return getCommodityDTOList(commodities);
+    }
+
+    public List<CommodityDTO> getCommoditiesByProviderName(String providerName) {
+        List<Commodity> commodities = balootService.getCommoditiesByProviderName(providerName);
+        return getCommodityDTOList(commodities);
+    }
+
+    public List<CommodityDTO> getCommoditiesSortedByPrice() {
+        List<Commodity> commodities = balootService.getCommoditiesByOrderedByPrice(true);
+        return getCommodityDTOList(commodities);
+    }
+
+    public List<CommodityDTO> getCommoditiesSortedByName() {
+        List<Commodity> commodities = balootService.getCommoditiesByOrderedByName(true);
+        return getCommodityDTOList(commodities);
     }
 
 }
