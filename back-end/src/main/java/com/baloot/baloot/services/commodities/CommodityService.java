@@ -2,6 +2,7 @@ package com.baloot.baloot.services.commodities;
 
 import com.baloot.baloot.BalootService;
 import com.baloot.baloot.DTO.CommodityDTO;
+import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
 import com.baloot.baloot.models.Commodity.Commodity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +33,26 @@ public class CommodityService {
         return commodities;
     }
 
+    public CommodityDTO getCommodityById(int commodityId) throws Exception {
+        Commodity commodity = balootService.getCommodityById(commodityId);
+        if(commodity==null)
+            throw new CommodityNotExistsException();
+        CommodityDTO commodityDTO = new
+                CommodityDTO (
+                        commodity.getId(), commodity.getName(),
+                        commodity.getProviderId(), commodity.getPrice(),
+                        commodity.getRating(), commodity.getInStock(),
+                        commodity.getImage(), commodity.getNumOfRatings());
+        commodityDTO.setCategories(new ArrayList<>(balootService.getCommodityCategories(commodity.getId())));
+        return commodityDTO;
+    }
+
     public List<CommodityDTO> getCommodityDTOList(List<Commodity> commodities) {
         List<CommodityDTO> result = new ArrayList<>();
         for (Commodity commodity : commodities) {
-            CommodityDTO commodityDTO = new CommodityDTO
-                    (commodity.getId(), commodity.getName(),
+            CommodityDTO commodityDTO = new
+                    CommodityDTO(
+                            commodity.getId(), commodity.getName(),
                             commodity.getProviderId(), commodity.getPrice(),
                             commodity.getRating(), commodity.getInStock(),
                             commodity.getImage(), commodity.getNumOfRatings()); //no need to set comments here!

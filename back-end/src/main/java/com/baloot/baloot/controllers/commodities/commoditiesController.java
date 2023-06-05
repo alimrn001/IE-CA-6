@@ -1,14 +1,20 @@
 package com.baloot.baloot.controllers.commodities;
 
+import com.baloot.baloot.BalootService;
+import com.baloot.baloot.DTO.CommentDTO;
+import com.baloot.baloot.DTO.CommodityDTO;
 import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.domain.Baloot.Comment.Comment;
 import com.baloot.baloot.domain.Baloot.Commodity.*;
 import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
 import com.baloot.baloot.domain.Baloot.Exceptions.NoLoggedInUserException;
 import com.baloot.baloot.domain.Baloot.Exceptions.RatingOutOfRangeException;
-import com.baloot.baloot.domain.Baloot.Provider.Provider;
+//import com.baloot.baloot.domain.Baloot.Provider.Provider;
+import com.baloot.baloot.models.Provider.Provider;
 import com.baloot.baloot.services.commodities.CommentService;
+import com.baloot.baloot.services.commodities.CommodityService;
 import com.baloot.baloot.services.commodities.RecommendationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +27,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/commodities")
 public class commoditiesController {
+    @Autowired
+    private BalootService balootService;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private CommodityService commodityService;
 
     @GetMapping("/")
     public String getCommodities() throws IOException{
@@ -29,15 +43,15 @@ public class commoditiesController {
 
     @GetMapping("/{commodityId}")
     public ResponseEntity getCommodity(@PathVariable String commodityId) throws IOException {
-        if(!Baloot.getInstance().userIsLoggedIn())
+        if(!balootService.userIsLoggedIn())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User must be logged in!");
         try {
             Map<String, Object> responseMap = new HashMap<>();
-            String loggedInUsername = Baloot.getInstance().getLoggedInUsername();
-            int cartSize = Baloot.getInstance().getBalootUser(loggedInUsername).getBuyList().size();
-            Commodity commodity = Baloot.getInstance().getBalootCommodity(Integer.parseInt(commodityId));
-            Map<Integer, Comment> comments = CommentService.getCommodityComments(Integer.parseInt(commodityId));
-            Provider provider = Baloot.getInstance().getBalootProvider(commodity.getProviderId());
+            String loggedInUsername = balootService.getLoggedInUser().getUsername();
+            int cartSize = 2; //for now later to be replaced bu buylist
+            CommodityDTO commodity = commodityService.getCommodityById(Integer.parseInt(commodityId));
+            Map<Integer, CommentDTO> comments = commentService.getCommodityComments(Integer.parseInt(commodityId));
+            Provider provider = balootService.getProviderById(commodity.getProviderId());
             List<Commodity> recommendedCommodities = RecommendationService.getRecommendedCommodities(Integer.parseInt(commodityId));
             responseMap.put("loggedInUsername", loggedInUsername);
             responseMap.put("cartSize", cartSize);
@@ -53,6 +67,30 @@ public class commoditiesController {
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+//        if(!Baloot.getInstance().userIsLoggedIn())
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User must be logged in!");
+//        try {
+//            Map<String, Object> responseMap = new HashMap<>();
+//            String loggedInUsername = Baloot.getInstance().getLoggedInUsername();
+//            int cartSize = Baloot.getInstance().getBalootUser(loggedInUsername).getBuyList().size();
+//            Commodity commodity = Baloot.getInstance().getBalootCommodity(Integer.parseInt(commodityId));
+//            Map<Integer, Comment> comments = CommentService.getCommodityComments(Integer.parseInt(commodityId));
+//            Provider provider = Baloot.getInstance().getBalootProvider(commodity.getProviderId());
+//            List<Commodity> recommendedCommodities = RecommendationService.getRecommendedCommodities(Integer.parseInt(commodityId));
+//            responseMap.put("loggedInUsername", loggedInUsername);
+//            responseMap.put("cartSize", cartSize);
+//            responseMap.put("commodity", commodity);
+//            responseMap.put("comments", comments);
+//            responseMap.put("providerName", provider.getName());
+//            responseMap.put("recommended", recommendedCommodities);
+//            return ResponseEntity.status(HttpStatus.OK).body(responseMap);
+//        }
+//        catch (CommodityNotExistsException | NumberFormatException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+//        }
+//        catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//        }
     }
 
     @PostMapping("/{commodityId}/addComment")

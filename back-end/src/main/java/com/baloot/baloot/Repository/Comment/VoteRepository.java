@@ -16,8 +16,8 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     List<Vote> findVotesByUserUsername(String username);
 
-    long countByCommentAndVote(Comment comment, int vote);
+    int countByCommentAndVote(Comment comment, int vote);
 
-    long countByComment_CommentIdAndVote(int commentId, int vote);
+    int countByComment_CommentIdAndVote(int commentId, int vote);
 
 }

@@ -92,7 +92,7 @@ public class BalootService {
                 retrieveDiscountsDataFromAPI(discountCouponsAddr);
             }
             else {
-                retrieveCommentsDataFromAPI(commentsAddr);
+//                retrieveCommentsDataFromAPI(commentsAddr);
 //                retrieveDiscountsDataFromAPI(discountCouponsAddr);
             }
         }
@@ -268,11 +268,11 @@ public class BalootService {
         return ratingRepository.countByUserUsername(username);
     }
 
-    public long getNumberOfCommentLikes(Comment comment) {
+    public int getNumberOfCommentLikes(Comment comment) {
         return voteRepository.countByCommentAndVote(comment, 1);
     }
 
-    public long getNumberOfCommentDislikes(Comment comment) {
+    public int getNumberOfCommentDislikes(Comment comment) {
         return voteRepository.countByCommentAndVote(comment, 0);
     }
 

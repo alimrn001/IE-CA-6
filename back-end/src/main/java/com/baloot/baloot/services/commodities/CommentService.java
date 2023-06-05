@@ -1,12 +1,40 @@
 package com.baloot.baloot.services.commodities;
 
+import com.baloot.baloot.BalootService;
+import com.baloot.baloot.DTO.CommentDTO;
 import com.baloot.baloot.domain.Baloot.Baloot;
-import com.baloot.baloot.domain.Baloot.Comment.Comment;
+import com.baloot.baloot.models.Comment.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+@Service
 public class CommentService {
-    public static Map<Integer, Comment> getCommodityComments(int commodityId) throws Exception {
-        return Baloot.getInstance().getCommodityComments(commodityId);
+    @Autowired
+    BalootService balootService;
+
+    CommentDTO getCommentDTOFromComment(Comment comment) {
+        int likes = balootService.getNumberOfCommentLikes(comment);
+        int disliked = balootService.getNumberOfCommentDislikes(comment);
+        CommentDTO commentDTO = new CommentDTO(
+                                                comment.getCommentId(), comment.getUsername(),
+                                                comment.getCommodityId(), comment.getText(),
+                                                comment.getDate(), likes, disliked);
+        return commentDTO;
+    }
+
+    public Map<Integer, CommentDTO> getCommodityComments(int commodityId) throws Exception {
+        List<Comment> comments = balootService.getCommodityComments(commodityId);
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        Map<Integer, CommentDTO> result = new HashMap<>();
+        for(Comment comment : comments)
+            commentDTOList.add(getCommentDTOFromComment(comment));
+        for(CommentDTO commentDTO : commentDTOList)
+            result.put(commentDTO.getCommentId(), commentDTO);
+        return result;
     }
 }
