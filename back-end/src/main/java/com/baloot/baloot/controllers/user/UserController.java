@@ -40,32 +40,13 @@ public class UserController {
         try {
             String loggedInUsername = balootService.getLoggedInUser().getUsername();
             UserDTO user = userService.getBalootUser(loggedInUsername);
-//            List<Commodity> buyList = Baloot.getInstance().getCommoditiesByIDList(user.getBuyList());
-//            List<Commodity> history = Baloot.getInstance().getCommoditiesByIDList(user.getPurchasedList());
             Map<String, Object> responseMap = new HashMap<>();
-
             responseMap.put("userInfo", user);
             return ResponseEntity.status(HttpStatus.OK).body(responseMap);
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-//        if(!Baloot.getInstance().userIsLoggedIn())
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User must be logged in!");
-//        try {
-//            System.out.println("reached user !");
-//            String loggedInUsername = Baloot.getInstance().getLoggedInUsername();
-//            User user = Baloot.getInstance().getBalootUser(loggedInUsername);
-//            List<Commodity> buyList = Baloot.getInstance().getCommoditiesByIDList(user.getBuyList());
-//            List<Commodity> history = Baloot.getInstance().getCommoditiesByIDList(user.getPurchasedList());
-//            Map<String, Object> responseMap = new HashMap<>();
-//
-//            responseMap.put("userInfo", user);
-//            return ResponseEntity.status(HttpStatus.OK).body(responseMap);
-//        }
-//        catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//        }
     }
 
     @PostMapping("/user/addCredit")
@@ -89,4 +70,5 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
 }

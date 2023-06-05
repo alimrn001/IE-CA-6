@@ -32,4 +32,19 @@ public class CommodityService {
         return commodities;
     }
 
+    public List<CommodityDTO> getProviderCommodities(int providerId) {
+        List<Commodity> provided = balootService.getCommoditiesByProviderId(providerId);
+        List<CommodityDTO> providerCommodities = new ArrayList<>();
+        for (Commodity commodity : provided) {
+            CommodityDTO commodityDTO = new CommodityDTO
+                    (commodity.getId(), commodity.getName(),
+                            commodity.getProviderId(), commodity.getPrice(),
+                            commodity.getRating(), commodity.getInStock(),
+                            commodity.getImage(), commodity.getNumOfRatings()); //no need to set comments here!
+            commodityDTO.setCategories(new ArrayList<>(balootService.getCommodityCategories(commodity.getId())));
+            providerCommodities.add(commodityDTO);
+        }
+        return providerCommodities;
+    }
+
 }

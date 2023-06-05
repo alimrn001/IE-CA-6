@@ -1,8 +1,15 @@
 package com.baloot.baloot.controllers.providers;
 
+import com.baloot.baloot.BalootService;
+import com.baloot.baloot.DTO.CommodityDTO;
+import com.baloot.baloot.DTO.ProviderDTO;
 import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
 import com.baloot.baloot.domain.Baloot.Provider.Provider;
+import com.baloot.baloot.services.commodities.CommodityService;
+import com.baloot.baloot.services.providers.ProviderService;
+import com.baloot.baloot.services.users.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,16 +27,28 @@ import java.util.Map;
 @RequestMapping("/providers")
 public class ProvidersController {
 
+    @Autowired
+    private BalootService balootService;
+
+    @Autowired
+    private ProviderService providerService;
+
+    @Autowired
+    private CommodityService commodityService;
+
     @GetMapping("/{providerId}")
     public ResponseEntity getProvider(@PathVariable String providerId) throws IOException {
-        if(!Baloot.getInstance().userIsLoggedIn())
+        if(!balootService.userIsLoggedIn())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User must be logged in!");
         try {
             Map<String, Object> responseMap = new HashMap<>();
-            String loggedInUsername = Baloot.getInstance().getLoggedInUsername();
-            int cartSize = Baloot.getInstance().getBalootUser(loggedInUsername).getBuyList().size();
-            Provider provider = Baloot.getInstance().getBalootProvider(Integer.parseInt(providerId));
-            List<Commodity> providedCommodities = Baloot.getInstance().getCommoditiesByIDList(provider.getCommoditiesProvided());
+            String loggedInUsername = balootService.getLoggedInUser().getUsername();
+//            int cartSize = Baloot.getInstance().getBalootUser(loggedInUsername).getBuyList().size();
+            int cartSize = 2; //for test cause there is still no buylist !
+//            Provider provider = Baloot.getInstance().getBalootProvider(Integer.parseInt(providerId));
+            ProviderDTO provider = providerService.getBalootProvider(Integer.parseInt(providerId));
+//            List<Commodity> providedCommodities = Baloot.getInstance().getCommoditiesByIDList(provider.getCommoditiesProvided());
+            List<CommodityDTO> providedCommodities = commodityService.getProviderCommodities(Integer.parseInt(providerId));
             responseMap.put("loggedInUsername", loggedInUsername);
             responseMap.put("sinceYear", provider.getRegistryDate().getYear());
             responseMap.put("cartSize", cartSize);
