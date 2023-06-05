@@ -29,7 +29,7 @@ public class User {
 
     private int credit;
 
-    @ManyToMany(mappedBy = "discountUsers")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "discountUsers")
     private Set<DiscountCoupon> usedDiscounts = new HashSet<>();
 
 //    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

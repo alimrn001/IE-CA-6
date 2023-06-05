@@ -15,26 +15,11 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 
     Commodity getCommodityById(int commodityId);
 
-//    @Query("SELECT c.categories as categories FROM Commodity c WHERE c.id = :commodityId")
-//    CommodityCategoryProjection findCategoriesById(@Param("commodityId") int commodityId);
-//
-//    List<CommodityCategoryProjection> findAllBy();
-
-
     @Query(
             value = "SELECT cc.categories FROM commodity_categories cc WHERE cc.commodity_id = :id",
             nativeQuery = true
     )
     List<String> findCategoriesByCommodityId(@Param("id") int id);
-
-
-//    Set<String>
-
-//    Set<String> findCategoriesById(int commodityId);
-//
-//    default Set<String> findCategoriesByCommodity(Commodity commodity) {
-//        return findCategoriesById(commodity.getId());
-//    }
 
     List<Commodity> findByNameContaining(String name);
 

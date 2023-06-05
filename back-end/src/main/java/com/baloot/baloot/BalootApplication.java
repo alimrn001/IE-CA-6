@@ -1,10 +1,12 @@
 package com.baloot.baloot;
 
+import com.baloot.baloot.DTO.CommodityDTO;
 import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
 import com.baloot.baloot.domain.Baloot.Exceptions.ForbiddenValueException;
 import com.baloot.baloot.domain.Baloot.Exceptions.NoLoggedInUserException;
 import com.baloot.baloot.services.BalootDataService;
+import com.baloot.baloot.services.commodities.CommodityService;
 import com.baloot.baloot.services.commodities.FilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +27,9 @@ public class BalootApplication {
     @Autowired
     private BalootService balootService;
 
+    @Autowired
+    private CommodityService commodityService;
+
     public static void main(String[] args) {
         try {
             BalootDataService.getInstance().importBalootDataFromAPI();
@@ -39,23 +44,29 @@ public class BalootApplication {
     @GetMapping("/")
     public ResponseEntity getBalootCommoditiesList() throws IOException {
 //        balootService.addComment("akbar", 50, LocalDate.now().toString(), "this is a comment");
-        try {
+//        try {
 //            balootService.voteComment("hamid", 1, 1);
-            for(String category : balootService.getCommodityCategories(10))
-                System.out.println(category);
-            for(com.baloot.baloot.models.Commodity.Commodity commodity: balootService.getCommoditiesByCategory("Phone"))
-                System.out.println(commodity.getName());
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        if(!Baloot.getInstance().userIsLoggedIn()) {
+//            for(String category : balootService.getCommodityCategories(10))
+//                System.out.println(category);
+//            for(com.baloot.baloot.models.Commodity.Commodity commodity: balootService.getCommoditiesByCategory("Phone"))
+//                System.out.println(commodity.getName());
+//            System.out.println(commodityService.getAllCommodities().size() + " is total commodities");
+//
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        if(!Baloot.getInstance().userIsLoggedIn()) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
+//        }
+        if(!balootService.userIsLoggedIn()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
         }
-        Map<Integer, Commodity> allCommodities = Baloot.getInstance().getBalootCommodities();
+
+//        Map<Integer, Commodity> allCommodities = Baloot.getInstance().getBalootCommodities();
+        Map<Integer, CommodityDTO> allCommodities = commodityService.getAllCommodities();
         Map<String, Object> map = new HashMap<>();
-        map.put("loggedInUsername", Baloot.getInstance().getLoggedInUsername());
+        map.put("loggedInUsername", balootService.getLoggedInUser());
         map.put("commodities", allCommodities);
         return ResponseEntity.status(HttpStatus.OK).body(map);
     }
