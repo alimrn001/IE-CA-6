@@ -21,7 +21,7 @@ public class CommentService {
         int likes = balootService.getNumberOfCommentLikes(comment);
         int disliked = balootService.getNumberOfCommentDislikes(comment);
         CommentDTO commentDTO = new CommentDTO(
-                                                comment.getCommentId(), comment.getUsername(),
+                                                comment.getCommentId(), comment.getUser().getUsername(),
                                                 comment.getCommodityId(), comment.getText(),
                                                 comment.getDate(), likes, disliked);
         return commentDTO;
@@ -31,8 +31,9 @@ public class CommentService {
         List<Comment> comments = balootService.getCommodityComments(commodityId);
         List<CommentDTO> commentDTOList = new ArrayList<>();
         Map<Integer, CommentDTO> result = new HashMap<>();
-        for(Comment comment : comments)
+        for(Comment comment : comments) {
             commentDTOList.add(getCommentDTOFromComment(comment));
+        }
         for(CommentDTO commentDTO : commentDTOList)
             result.put(commentDTO.getCommentId(), commentDTO);
         return result;
