@@ -98,6 +98,13 @@ class User extends Component {
         },
       ],
 
+      cartCommoditiesCount2: [
+        {
+          commodityID: 1,
+          cartItemsCount: 5,
+        },
+      ],
+
       cartCommoditiesCount: [
         {
           commodityID: 1234,
@@ -207,7 +214,7 @@ class User extends Component {
   }
 
   updateCartCommoditiesCount(commodityID, count) {
-    this.state.cartCommoditiesCount.forEach((item) => {
+    this.state.cartCommoditiesCount2.forEach((item) => {
       if (item.commodityID == commodityID) {
         item.cartItemsCount = count;
         console.log(item.cartItemsCount);
@@ -270,7 +277,7 @@ class User extends Component {
           <div class="row">
             <PopUp1
               cartCommodities={this.state.cartCommodities2}
-              cartCommoditiesCount={this.state.cartCommoditiesCount}
+              cartCommoditiesCount={this.state.cartCommoditiesCount2}
             />
           </div>
 

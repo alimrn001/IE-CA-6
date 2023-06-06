@@ -8,7 +8,7 @@ class CartTableRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orderCount: 1,
+      orderCount: this.props.initialOrderCount,
     };
   }
   componentDidMount() {
