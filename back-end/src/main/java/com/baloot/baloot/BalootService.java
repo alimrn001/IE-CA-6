@@ -178,6 +178,14 @@ public class BalootService {
         return loggedInUser != null;
     }
 
+    public boolean usernameExists(String username) {
+        return (userRepository.getUserByUsername(username)!=null);
+    }
+
+    public boolean emailExists(String email) {
+        return (userRepository.getUserByEmail(email)!=null);
+    }
+
     public User getLoggedInUser() {
         return loggedInUser;
     }
@@ -388,9 +396,11 @@ public class BalootService {
         }
     }
 
-    public void addItemToBuyList(User user, Commodity commodity, int quantity) {
+    public void addItemToBuyList(User user, Commodity commodity, int quantity) throws Exception {
         List<BuyListItem> userBuyList = buyListItemRepository.findByUser_Username(user.getUsername());;
         if(userBuyList.size()==0) {
+            if(quantity > commodity.getInStock())
+                throw new ItemNotAvailableInStockException();
             BuyList buyList = new BuyList();
             buyListRepository.save(buyList);
             BuyListItem buyListItem = new BuyListItem(user, commodity, buyList, quantity);
@@ -400,12 +410,16 @@ public class BalootService {
             BuyList userBL = userBuyList.get(0).getBuyList();
             BuyListItem item = buyListItemRepository.getBuyListItemByUserAndCommodityAndBuyList(user, commodity, userBL);
             if(item==null) {
+                if(quantity > commodity.getInStock())
+                    throw new ItemNotAvailableInStockException();
                 BuyListItem buyListItem = new BuyListItem(user, commodity, userBL, quantity);
                 buyListItemRepository.save(buyListItem);
             }
             else {
-                int previousQuantity = item.getQuantity();
-                item.setQuantity(previousQuantity + quantity);
+                int totalQuantity = item.getQuantity() + quantity;
+                if(totalQuantity > commodity.getInStock())
+                    throw new ItemNotAvailableInStockException();
+                item.setQuantity(totalQuantity);
                 buyListItemRepository.save(item);
             }
         }
