@@ -155,6 +155,31 @@ class Product extends Component {
       });
   };
 
+  handleAddToBuylist = (event) => {
+    event.preventDefault();
+    axios
+      .post(
+        `http://localhost:8888/commodities/${this.props.match.params.productId}/addToBuyList`,
+        {
+          quantity: 1,
+        }
+      )
+      .then((resp) => {
+        if (resp.status === 200) {
+          this.setState((prevState) => {
+            window.location.href = "http://localhost:3000/user";
+          });
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 403) {
+          toast.error("Item not available in stock");
+        } else {
+          window.location.href = "http://localhost:3000/badrequest";
+        }
+      });
+  };
+
   handleRateCommodity = (event, value) => {
     event.preventDefault();
     axios
@@ -205,6 +230,7 @@ class Product extends Component {
               </div>
               <div className="col-lg-6 product-details">
                 <ProductDetails
+                  onAddToBuyList={this.handleAddToBuylist}
                   onAddRating={this.handleRateCommodity}
                   ProductDetails={this.state.ProductDetailsEX}
                 />

@@ -69,7 +69,11 @@ class ProductDetails extends Component {
             <p className="font-800">{this.props.ProductDetails.price}$</p>
           </div>
           <div className="">
-            <button className="btn add-cart-main-button" type="submit">
+            <button
+              className="btn add-cart-main-button"
+              type="submit"
+              onClick={(event) => this.props.onAddToBuyList(event)}
+            >
               add to card
             </button>
           </div>

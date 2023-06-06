@@ -6,10 +6,12 @@ import com.baloot.baloot.DTO.CommodityDTO;
 import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.domain.Baloot.Commodity.*;
 import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
+import com.baloot.baloot.domain.Baloot.Exceptions.ItemNotAvailableInStockException;
 import com.baloot.baloot.domain.Baloot.Exceptions.NoLoggedInUserException;
 import com.baloot.baloot.domain.Baloot.Exceptions.RatingOutOfRangeException;
 //import com.baloot.baloot.domain.Baloot.Provider.Provider;
 import com.baloot.baloot.models.Provider.Provider;
+import com.baloot.baloot.services.buylists.BuyListService;
 import com.baloot.baloot.services.comments.CommentService;
 import com.baloot.baloot.services.commodities.CommodityService;
 import com.baloot.baloot.services.commodities.RecommendationService;
@@ -35,6 +37,9 @@ public class commoditiesController {
 
     @Autowired
     private CommodityService commodityService;
+
+    @Autowired
+    private BuyListService buyListService;
 
     @GetMapping("/")
     public String getCommodities() throws IOException{
@@ -138,26 +143,32 @@ public class commoditiesController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
 
-//        if(!Baloot.getInstance().userIsLoggedIn()) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
-//        }
-//        try {
-//            String username = Baloot.getInstance().getLoggedInUsername();
-//            int rating = Integer.parseInt(payload.get("value").toString());
-//            Baloot.getInstance().addRating(username, Integer.parseInt(commodityId), rating);
-//            double ratingScore = Baloot.getInstance().getBalootCommodity(Integer.parseInt(commodityId)).getRating();
-//            int ratingCount = Baloot.getInstance().getBalootCommodity(Integer.parseInt(commodityId)).getNumOfRatings();
+    }
+
+    @PostMapping("/{commodityId}/addToBuyList")
+    public  ResponseEntity addCommodityToBuyList(@PathVariable String commodityId, @RequestBody Map<String, Object> payload) {
+        if(!balootService.userIsLoggedIn())
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
+        try {
+            String username = balootService.getLoggedInUser().getUsername();
+            int quantity = Integer.parseInt(payload.get("quantity").toString());
+            buyListService.addItemToBuyList(username, Integer.parseInt(commodityId), quantity);
+
+//            balootService.addRating(username, Integer.parseInt(commodityId), rating);
+//            double ratingScore = balootService.getCommodityById(Integer.parseInt(commodityId)).getRating();
+//            int ratingCount = balootService.getCommodityById(Integer.parseInt(commodityId)).getNumOfRatings();
 //            Map<String, Object> info = new HashMap<>();
 //            info.put("ratingScore", ratingScore);
 //            info.put("ratingCount", ratingCount);
-//            return ResponseEntity.status(HttpStatus.OK).body(info);
-//        }
-//        catch (RatingOutOfRangeException | NumberFormatException e) {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
-//        }
-//        catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//        }
+            return ResponseEntity.status(HttpStatus.OK).body("ok");
+        }
+        catch (ItemNotAvailableInStockException | NumberFormatException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
     }
 
 }
