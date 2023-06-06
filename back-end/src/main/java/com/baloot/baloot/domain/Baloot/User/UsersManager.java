@@ -1,6 +1,6 @@
 package com.baloot.baloot.domain.Baloot.User;
 
-import com.baloot.baloot.domain.Baloot.Exceptions.*;
+import com.baloot.baloot.Exceptions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

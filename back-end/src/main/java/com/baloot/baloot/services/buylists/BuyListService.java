@@ -1,12 +1,12 @@
 package com.baloot.baloot.services.buylists;
 
-import com.baloot.baloot.BalootService;
+import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.DTO.BuyListItemCntDTO;
 import com.baloot.baloot.DTO.BuyListItemDTO;
 import com.baloot.baloot.DTO.CommodityDTO;
-import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
-import com.baloot.baloot.domain.Baloot.Exceptions.ItemNotAvailableInStockException;
-import com.baloot.baloot.domain.Baloot.Exceptions.UserNotExistsException;
+import com.baloot.baloot.Exceptions.CommodityNotExistsException;
+import com.baloot.baloot.Exceptions.ItemNotAvailableInStockException;
+import com.baloot.baloot.Exceptions.UserNotExistsException;
 import com.baloot.baloot.models.BuyList.BuyListItem;
 import com.baloot.baloot.models.Commodity.Commodity;
 import com.baloot.baloot.models.User.User;

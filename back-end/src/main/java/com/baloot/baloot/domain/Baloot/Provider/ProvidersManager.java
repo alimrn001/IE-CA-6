@@ -1,6 +1,6 @@
 package com.baloot.baloot.domain.Baloot.Provider;
 
-import com.baloot.baloot.domain.Baloot.Exceptions.ProviderNotExistsException;
+import com.baloot.baloot.Exceptions.ProviderNotExistsException;
 
 import java.util.HashMap;
 import java.util.Map;

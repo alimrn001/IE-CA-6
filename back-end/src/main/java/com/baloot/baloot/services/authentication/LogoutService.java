@@ -1,7 +1,6 @@
 package com.baloot.baloot.services.authentication;
 
-import com.baloot.baloot.BalootService;
-import com.baloot.baloot.domain.Baloot.Baloot;
+import com.baloot.baloot.services.BalootService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

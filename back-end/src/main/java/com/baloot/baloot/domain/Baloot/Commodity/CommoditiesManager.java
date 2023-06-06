@@ -1,7 +1,7 @@
 package com.baloot.baloot.domain.Baloot.Commodity;
 
-import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
-import com.baloot.baloot.domain.Baloot.Exceptions.CommodityWithSameIDException;
+import com.baloot.baloot.Exceptions.CommodityNotExistsException;
+import com.baloot.baloot.Exceptions.CommodityWithSameIDException;
 import com.google.common.collect.Maps;
 
 import java.util.*;

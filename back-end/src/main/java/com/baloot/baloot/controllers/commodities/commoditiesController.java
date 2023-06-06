@@ -1,14 +1,14 @@
 package com.baloot.baloot.controllers.commodities;
 
-import com.baloot.baloot.BalootService;
+import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.DTO.CommentDTO;
 import com.baloot.baloot.DTO.CommodityDTO;
 import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.domain.Baloot.Commodity.*;
-import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
-import com.baloot.baloot.domain.Baloot.Exceptions.ItemNotAvailableInStockException;
-import com.baloot.baloot.domain.Baloot.Exceptions.NoLoggedInUserException;
-import com.baloot.baloot.domain.Baloot.Exceptions.RatingOutOfRangeException;
+import com.baloot.baloot.Exceptions.CommodityNotExistsException;
+import com.baloot.baloot.Exceptions.ItemNotAvailableInStockException;
+import com.baloot.baloot.Exceptions.NoLoggedInUserException;
+import com.baloot.baloot.Exceptions.RatingOutOfRangeException;
 //import com.baloot.baloot.domain.Baloot.Provider.Provider;
 import com.baloot.baloot.models.Provider.Provider;
 import com.baloot.baloot.services.buylists.BuyListService;
@@ -153,13 +153,6 @@ public class commoditiesController {
             String username = balootService.getLoggedInUser().getUsername();
             int quantity = Integer.parseInt(payload.get("quantity").toString());
             buyListService.addItemToBuyList(username, Integer.parseInt(commodityId), quantity);
-
-//            balootService.addRating(username, Integer.parseInt(commodityId), rating);
-//            double ratingScore = balootService.getCommodityById(Integer.parseInt(commodityId)).getRating();
-//            int ratingCount = balootService.getCommodityById(Integer.parseInt(commodityId)).getNumOfRatings();
-//            Map<String, Object> info = new HashMap<>();
-//            info.put("ratingScore", ratingScore);
-//            info.put("ratingCount", ratingCount);
             return ResponseEntity.status(HttpStatus.OK).body("ok");
         }
         catch (ItemNotAvailableInStockException | NumberFormatException e) {

@@ -1,11 +1,10 @@
 package com.baloot.baloot;
 
 import com.baloot.baloot.DTO.CommodityDTO;
-import com.baloot.baloot.domain.Baloot.Baloot;
-import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
-import com.baloot.baloot.domain.Baloot.Exceptions.ForbiddenValueException;
-import com.baloot.baloot.domain.Baloot.Exceptions.NoLoggedInUserException;
-import com.baloot.baloot.services.BalootDataService;
+import com.baloot.baloot.Exceptions.ForbiddenValueException;
+import com.baloot.baloot.Exceptions.NoLoggedInUserException;
+import com.baloot.baloot.domain.Baloot.BalootDataService;
+import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.services.buylists.BuyListService;
 import com.baloot.baloot.services.commodities.CommodityService;
 import com.baloot.baloot.services.commodities.FilterService;
@@ -18,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,16 +47,8 @@ public class BalootApplication {
 
     @GetMapping("/")
     public ResponseEntity getBalootCommoditiesList() throws IOException {
-        if(!balootService.userIsLoggedIn()) {
+        if(!balootService.userIsLoggedIn())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
-        }
-        try {
-            buyListService.addItemToBuyList("amir", 1, 10);
-            buyListService.addItemToBuyList("amir", 3, 6);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         Map<Integer, CommodityDTO> allCommodities = commodityService.getAllCommodities();
         Map<String, Object> map = new HashMap<>();
         map.put("loggedInUsername", balootService.getLoggedInUser());

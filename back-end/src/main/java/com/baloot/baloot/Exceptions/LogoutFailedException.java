@@ -1,4 +1,4 @@
-package com.baloot.baloot.domain.Baloot.Exceptions;
+package com.baloot.baloot.Exceptions;
 
 public class LogoutFailedException extends Exception {
     public LogoutFailedException() {

@@ -1,7 +1,7 @@
 package com.baloot.baloot.domain.Baloot.Comment;
 
-import com.baloot.baloot.domain.Baloot.Exceptions.CommentNotExistsException;
-import com.baloot.baloot.domain.Baloot.Exceptions.WrongVoteValueException;
+import com.baloot.baloot.Exceptions.CommentNotExistsException;
+import com.baloot.baloot.Exceptions.WrongVoteValueException;
 
 import java.time.LocalDate;
 import java.util.HashMap;

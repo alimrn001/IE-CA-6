@@ -1,13 +1,10 @@
 package com.baloot.baloot.services.authentication;
-import com.baloot.baloot.BalootService;
-import com.baloot.baloot.domain.Baloot.Baloot;
-import com.baloot.baloot.domain.Baloot.Exceptions.ForbiddenValueException;
-import com.baloot.baloot.domain.Baloot.Exceptions.UserAlreadyExistsException;
-import com.baloot.baloot.domain.Baloot.User.User;
+import com.baloot.baloot.services.BalootService;
+import com.baloot.baloot.Exceptions.ForbiddenValueException;
+import com.baloot.baloot.Exceptions.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 @Service

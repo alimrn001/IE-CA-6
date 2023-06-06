@@ -1,17 +1,12 @@
 package com.baloot.baloot.services.users;
 
-import com.baloot.baloot.BalootService;
+import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.DTO.UserDTO;
-import com.baloot.baloot.domain.Baloot.Exceptions.NegativeCreditAddingException;
-import com.baloot.baloot.domain.Baloot.Exceptions.UserNotExistsException;
+import com.baloot.baloot.Exceptions.NegativeCreditAddingException;
+import com.baloot.baloot.Exceptions.UserNotExistsException;
 import com.baloot.baloot.models.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {

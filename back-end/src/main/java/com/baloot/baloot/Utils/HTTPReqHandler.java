@@ -1,4 +1,4 @@
-package com.baloot.baloot.HTTPReqHandler;
+package com.baloot.baloot.Utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;

@@ -1,7 +1,7 @@
 package com.baloot.baloot.domain.Baloot.DiscountCoupon;
 
-import com.baloot.baloot.domain.Baloot.Exceptions.DiscountCouponNotExistsException;
-import com.baloot.baloot.domain.Baloot.Exceptions.WrongDiscountPercentageException;
+import com.baloot.baloot.Exceptions.DiscountCouponNotExistsException;
+import com.baloot.baloot.Exceptions.WrongDiscountPercentageException;
 
 import java.util.HashMap;
 import java.util.Map;

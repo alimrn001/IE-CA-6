@@ -1,16 +1,12 @@
-package com.baloot.baloot.controllers.user;
+package com.baloot.baloot.controllers.users;
 
-import com.baloot.baloot.BalootService;
+import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.DTO.BuyListItemDTO;
 import com.baloot.baloot.DTO.UserDTO;
-import com.baloot.baloot.domain.Baloot.Baloot;
-import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
-import com.baloot.baloot.domain.Baloot.Exceptions.NegativeCreditAddingException;
-import com.baloot.baloot.domain.Baloot.Exceptions.UserNotExistsException;
+import com.baloot.baloot.Exceptions.NegativeCreditAddingException;
+import com.baloot.baloot.Exceptions.UserNotExistsException;
 
-import com.baloot.baloot.models.User.User;
 import com.baloot.baloot.services.buylists.BuyListService;
-import com.baloot.baloot.services.commodities.CommodityService;
 import com.baloot.baloot.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

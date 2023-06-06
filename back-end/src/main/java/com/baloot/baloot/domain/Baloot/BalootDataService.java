@@ -1,7 +1,6 @@
-package com.baloot.baloot.services;
+package com.baloot.baloot.domain.Baloot;
 
-import com.baloot.baloot.HTTPReqHandler.HTTPReqHandler;
-import com.baloot.baloot.domain.Baloot.Baloot;
+import com.baloot.baloot.Utils.HTTPReqHandler;
 import com.baloot.baloot.domain.Baloot.Comment.Comment;
 import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
 import com.baloot.baloot.domain.Baloot.DiscountCoupon.DiscountCoupon;

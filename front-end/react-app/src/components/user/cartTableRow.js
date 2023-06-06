@@ -73,7 +73,7 @@ class CartTableRow extends Component {
                   onClick={() =>
                     this.decreaseOrderCount(
                       this.props.updateItemCount,
-                      this.props.item.providerID
+                      this.props.item.commodityID
                     )
                   }
                 >
@@ -92,7 +92,7 @@ class CartTableRow extends Component {
                     this.increaseOrderCount(
                       this.props.item.inStock,
                       this.props.updateItemCount,
-                      this.props.item.providerID
+                      this.props.item.commodityID
                     )
                   }
                 >

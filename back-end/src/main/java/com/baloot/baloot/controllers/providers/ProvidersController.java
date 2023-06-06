@@ -1,14 +1,10 @@
 package com.baloot.baloot.controllers.providers;
 
-import com.baloot.baloot.BalootService;
+import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.DTO.CommodityDTO;
 import com.baloot.baloot.DTO.ProviderDTO;
-import com.baloot.baloot.domain.Baloot.Baloot;
-import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
-import com.baloot.baloot.domain.Baloot.Provider.Provider;
 import com.baloot.baloot.services.commodities.CommodityService;
 import com.baloot.baloot.services.providers.ProviderService;
-import com.baloot.baloot.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

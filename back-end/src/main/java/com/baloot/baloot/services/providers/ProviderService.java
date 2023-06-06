@@ -1,10 +1,9 @@
 package com.baloot.baloot.services.providers;
 
-import com.baloot.baloot.BalootService;
+import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.DTO.ProviderDTO;
-import com.baloot.baloot.domain.Baloot.Exceptions.ProviderNotExistsException;
+import com.baloot.baloot.Exceptions.ProviderNotExistsException;
 import com.baloot.baloot.models.Provider.Provider;
-import org.springframework.beans.PropertyAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

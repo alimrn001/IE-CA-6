@@ -1,8 +1,7 @@
 package com.baloot.baloot.services.comments;
 
-import com.baloot.baloot.BalootService;
+import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.DTO.CommentDTO;
-import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.models.Comment.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

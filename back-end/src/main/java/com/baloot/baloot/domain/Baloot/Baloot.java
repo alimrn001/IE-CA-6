@@ -6,7 +6,7 @@ import com.baloot.baloot.domain.Baloot.Commodity.CommoditiesManager;
 import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
 import com.baloot.baloot.domain.Baloot.DiscountCoupon.DiscountCoupon;
 import com.baloot.baloot.domain.Baloot.DiscountCoupon.DiscountCouponsManager;
-import com.baloot.baloot.domain.Baloot.Exceptions.*;
+import com.baloot.baloot.Exceptions.*;
 import com.baloot.baloot.domain.Baloot.Provider.Provider;
 import com.baloot.baloot.domain.Baloot.Provider.ProvidersManager;
 import com.baloot.baloot.domain.Baloot.Rating.*;

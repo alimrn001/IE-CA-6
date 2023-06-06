@@ -1,8 +1,8 @@
 package com.baloot.baloot.services.commodities;
 
-import com.baloot.baloot.BalootService;
+import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.DTO.CommodityDTO;
-import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
+import com.baloot.baloot.Exceptions.CommodityNotExistsException;
 import com.baloot.baloot.models.Commodity.Commodity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

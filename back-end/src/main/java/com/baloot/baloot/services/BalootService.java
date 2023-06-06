@@ -1,6 +1,6 @@
-package com.baloot.baloot;
+package com.baloot.baloot.services;
 
-import com.baloot.baloot.HTTPReqHandler.HTTPReqHandler;
+import com.baloot.baloot.Utils.HTTPReqHandler;
 import com.baloot.baloot.Repository.BuyList.BuyListItemRepository;
 import com.baloot.baloot.Repository.BuyList.BuyListRepository;
 import com.baloot.baloot.Repository.Comment.CommentRepository;
@@ -11,8 +11,7 @@ import com.baloot.baloot.Repository.Provider.ProviderRepository;
 import com.baloot.baloot.Repository.Rating.RatingRepository;
 import com.baloot.baloot.Repository.User.UserRepository;
 
-import com.baloot.baloot.domain.Baloot.Baloot;
-import com.baloot.baloot.domain.Baloot.Exceptions.*;
+import com.baloot.baloot.Exceptions.*;
 import com.baloot.baloot.domain.Baloot.Utilities.EmailParser;
 import com.baloot.baloot.domain.Baloot.Utilities.LocalDateAdapter;
 
@@ -31,7 +30,6 @@ import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.*;
