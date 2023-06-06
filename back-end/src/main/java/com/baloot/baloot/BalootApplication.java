@@ -53,7 +53,8 @@ public class BalootApplication {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
         }
         try {
-            buyListService.addItemToBuyList("amir", 1, 50);
+            buyListService.addItemToBuyList("amir", 1, 10);
+            buyListService.addItemToBuyList("amir", 3, 6);
         }
         catch (Exception e) {
             e.printStackTrace();

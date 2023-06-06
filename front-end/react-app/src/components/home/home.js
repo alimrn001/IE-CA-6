@@ -184,7 +184,7 @@ class Home extends Component {
             {/* <ul id="page-numbers">{renderPageNumbers}</ul> */}
           </section>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

@@ -75,6 +75,8 @@ class User extends Component {
 
       cartCommodities2: [],
 
+      historyTableData2: [],
+
       historyTableData: [
         {
           img: spaghettiImg,
@@ -98,12 +100,7 @@ class User extends Component {
         },
       ],
 
-      cartCommoditiesCount2: [
-        {
-          commodityID: 1,
-          cartItemsCount: 5,
-        },
-      ],
+      cartCommoditiesCount2: [],
 
       cartCommoditiesCount: [
         {
@@ -133,11 +130,21 @@ class User extends Component {
           let dislikedCommentsId = [];
           let usedCouponsId = [];
           let userBuyList = [];
+          let commodityCntData = [];
+          let userHistoryList = [];
           console.log(resp.data.userInfo);
           console.log(resp.data.cartCommodities);
 
           Object.keys(resp.data.cartCommodities).forEach((item) => {
             userBuyList.push(resp.data.cartCommodities[item]);
+          });
+
+          Object.keys(resp.data.cartCommoditiesCount).forEach((item) => {
+            commodityCntData.push(resp.data.cartCommoditiesCount[item]);
+          });
+
+          Object.keys(resp.data.history).forEach((item) => {
+            userHistoryList.push(resp.data.history[item]);
           });
 
           Object.keys(resp.data.userInfo.buyList).forEach((item) => {
@@ -187,6 +194,7 @@ class User extends Component {
                 userCoupons: usedCouponsId,
               },
               cartCommodities2: userBuyList,
+              cartCommoditiesCount2: commodityCntData,
             },
             () => {
               console.log(this.state.userInfo);
@@ -284,7 +292,7 @@ class User extends Component {
           <h3 class="text-brown mt-20">
             <img src={historyImg} class="cart-img" alt="" /> History
           </h3>
-          <HistoryTable historyTableData={this.state.historyTableData} />
+          <HistoryTable historyTableData={this.state.historyTableData2} />
         </div>
 
         <Footer />

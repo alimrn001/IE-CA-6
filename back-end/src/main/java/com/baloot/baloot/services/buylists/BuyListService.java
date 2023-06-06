@@ -1,6 +1,7 @@
 package com.baloot.baloot.services.buylists;
 
 import com.baloot.baloot.BalootService;
+import com.baloot.baloot.DTO.BuyListItemCntDTO;
 import com.baloot.baloot.DTO.BuyListItemDTO;
 import com.baloot.baloot.DTO.CommodityDTO;
 import com.baloot.baloot.domain.Baloot.Exceptions.CommodityNotExistsException;
@@ -36,19 +37,38 @@ public class BuyListService {
         balootService.addItemToBuyList(user, commodity, quantity);
     }
 
-    public List<BuyListItemDTO> getBuyListItems(String username) throws Exception {
+    public List<BuyListItemDTO> getBuyListItems(String username, boolean isPurchased) throws Exception {
         List<BuyListItemDTO> result = new ArrayList<>();
         User user = balootService.getUserByUsername(username);
         if(user==null)
             throw new UserNotExistsException();
         List<BuyListItem> userList = balootService.getUserBuyList(username);
         for(BuyListItem buyListItem : userList) {
-            CommodityDTO commodityDTO = commodityService.getCommodityById(buyListItem.getCommodity().getId());
-            BuyListItemDTO buyListItemDTO = new BuyListItemDTO(buyListItem.getBuyListItemId(), buyListItem.getCommodity().getId(),
-                    buyListItem.getQuantity(), buyListItem.getCommodity().getProviderId(), buyListItem.getCommodity().getName(),
-                    commodityDTO.getCategories(), buyListItem.getCommodity().getPrice(), buyListItem.getCommodity().getRating(),
-                    buyListItem.getCommodity().getInStock(), buyListItem.getCommodity().getImage());
-            result.add(buyListItemDTO);
+            if(buyListItem.getIsBought()==isPurchased) {
+                CommodityDTO commodityDTO = commodityService.getCommodityById(buyListItem.getCommodity().getId());
+                BuyListItemDTO buyListItemDTO = new BuyListItemDTO(buyListItem.getBuyListItemId(), buyListItem.getCommodity().getId(),
+                        buyListItem.getQuantity(), buyListItem.getCommodity().getProviderId(), buyListItem.getCommodity().getName(),
+                        commodityDTO.getCategories(), buyListItem.getCommodity().getPrice(), buyListItem.getCommodity().getRating(),
+                        buyListItem.getCommodity().getInStock(), buyListItem.getCommodity().getImage());
+                result.add(buyListItemDTO);
+            }
+        }
+        return result;
+    }
+
+    public List<BuyListItemDTO> getUserCurrentBuyList(String username) throws Exception {
+        return getBuyListItems(username, false);
+    }
+
+    public List<BuyListItemDTO> getUserPurchasedHistory(String username) throws Exception {
+        return getBuyListItems(username, true);
+    }
+
+    public List<BuyListItemCntDTO> generateBuyListItemCntList(List<BuyListItemDTO> items) {
+        List<BuyListItemCntDTO> result = new ArrayList<>();
+        for(BuyListItemDTO item : items) {
+            BuyListItemCntDTO buyListItemCntDTO = new BuyListItemCntDTO(item.getCommodityID(), item.getQuantity());
+            result.add(buyListItemCntDTO);
         }
         return result;
     }

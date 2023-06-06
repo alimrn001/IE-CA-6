@@ -45,10 +45,13 @@ public class UserController {
         try {
             String loggedInUsername = balootService.getLoggedInUser().getUsername();
             UserDTO user = userService.getBalootUser(loggedInUsername);
-            List<BuyListItemDTO> buylist = buyListService.getBuyListItems(loggedInUsername);
+            List<BuyListItemDTO> buylist = buyListService.getUserCurrentBuyList(loggedInUsername);
+            List<BuyListItemDTO> history = buyListService.getUserPurchasedHistory(loggedInUsername);
             Map<String, Object> responseMap = new HashMap<>();
             responseMap.put("userInfo", user);
             responseMap.put("cartCommodities", buylist);
+            responseMap.put("history", history);
+            responseMap.put("cartCommoditiesCount", buyListService.generateBuyListItemCntList(buylist));
             return ResponseEntity.status(HttpStatus.OK).body(responseMap);
         }
         catch (Exception e) {
