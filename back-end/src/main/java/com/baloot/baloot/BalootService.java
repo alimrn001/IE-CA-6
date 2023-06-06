@@ -273,7 +273,7 @@ public class BalootService {
     }
 
     public int getNumberOfCommentDislikes(Comment comment) {
-        return voteRepository.countByCommentAndVote(comment, 0);
+        return voteRepository.countByCommentAndVote(comment, -1);
     }
 
     public long getNumberOfCommentLikesById(int commentId) {
@@ -281,7 +281,7 @@ public class BalootService {
     }
 
     public long getNumberOfCommentDislikesById(int commentId) {
-        return voteRepository.countByComment_CommentIdAndVote(commentId, 0);
+        return voteRepository.countByComment_CommentIdAndVote(commentId, -1);
     }
 
     public void checkUsernameValidity(String username) throws Exception {
@@ -366,7 +366,7 @@ public class BalootService {
         Vote oldVote = voteRepository.getVoteByCommentCommentIdAndUserUsername(commentId, username);
         Comment comment = commentRepository.getCommentByCommentId(commentId);
         User user = userRepository.getUserByUsername(username);
-        if(voteValue != 0 && voteValue != 1)
+        if(voteValue != -1 && voteValue != 1)
             throw new WrongVoteValueException();
         if(oldVote == null) {
             Vote vote = new Vote(comment, user, voteValue);

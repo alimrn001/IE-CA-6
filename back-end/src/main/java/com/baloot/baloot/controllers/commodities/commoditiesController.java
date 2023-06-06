@@ -85,37 +85,35 @@ public class commoditiesController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-//        if(!Baloot.getInstance().userIsLoggedIn()) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
-//        }
-//        try {
-//            System.out.println("reached here !");
-//            System.out.println(payLoad.get("commodity").toString() + " : " + payLoad.get("commodity").toString());
-//            String loggedInUser = Baloot.getInstance().getLoggedInUsername();
-//            Baloot.getInstance().addCommentByUserInput(loggedInUser, Integer.parseInt(payLoad.get("commodity").toString()), payLoad.get("text").toString());
-//            return ResponseEntity.status(HttpStatus.OK).body("ok");
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//        }
     }
 
     @PostMapping("/{commodityId}/voteComment")
     public  ResponseEntity voteComment(@RequestBody Map<String, Object> payload) {
-        if(!Baloot.getInstance().userIsLoggedIn()) {
+        if(!balootService.userIsLoggedIn())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
-        }
         try {
-            String loggedInUser = Baloot.getInstance().getLoggedInUsername();
+            String loggedInUser = balootService.getLoggedInUser().getUsername();
             int voteVal = Integer.parseInt(payload.get("value").toString());
             int commentId = Integer.parseInt(payload.get("commentId").toString());
-            Baloot.getInstance().voteComment(loggedInUser, commentId, voteVal);
+            commentService.voteComment(loggedInUser, commentId, voteVal);
             return ResponseEntity.status(HttpStatus.OK).body("OK");
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+//        if(!Baloot.getInstance().userIsLoggedIn()) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
+//        }
+//        try {
+//            String loggedInUser = Baloot.getInstance().getLoggedInUsername();
+//            int voteVal = Integer.parseInt(payload.get("value").toString());
+//            int commentId = Integer.parseInt(payload.get("commentId").toString());
+//            Baloot.getInstance().voteComment(loggedInUser, commentId, voteVal);
+//            return ResponseEntity.status(HttpStatus.OK).body("OK");
+//        }
+//        catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//        }
     }
 
     @PostMapping("/{commodityId}/rate")

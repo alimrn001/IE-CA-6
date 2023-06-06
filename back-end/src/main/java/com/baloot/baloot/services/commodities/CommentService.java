@@ -38,4 +38,9 @@ public class CommentService {
             result.put(commentDTO.getCommentId(), commentDTO);
         return result;
     }
+
+    public void voteComment(String username, int commentId, int vote) throws Exception {
+        balootService.voteComment(username, commentId, vote);
+    }
+
 }
