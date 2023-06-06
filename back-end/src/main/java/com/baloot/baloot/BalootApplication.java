@@ -6,6 +6,7 @@ import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
 import com.baloot.baloot.domain.Baloot.Exceptions.ForbiddenValueException;
 import com.baloot.baloot.domain.Baloot.Exceptions.NoLoggedInUserException;
 import com.baloot.baloot.services.BalootDataService;
+import com.baloot.baloot.services.buylists.BuyListService;
 import com.baloot.baloot.services.commodities.CommodityService;
 import com.baloot.baloot.services.commodities.FilterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class BalootApplication {
     @Autowired
     private FilterService filterService;
 
+    @Autowired
+    private BuyListService buyListService;
+
     public static void main(String[] args) {
         try {
             BalootDataService.getInstance().importBalootDataFromAPI();
@@ -47,6 +51,12 @@ public class BalootApplication {
     public ResponseEntity getBalootCommoditiesList() throws IOException {
         if(!balootService.userIsLoggedIn()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new NoLoggedInUserException().getMessage());
+        }
+        try {
+            buyListService.addItemToBuyList("amir", 1, 3);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
         Map<Integer, CommodityDTO> allCommodities = commodityService.getAllCommodities();
         Map<String, Object> map = new HashMap<>();

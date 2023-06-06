@@ -19,10 +19,6 @@ public class BuyList {
                 inverseJoinColumns = @JoinColumn(name = "buyListItemId"))
     Set<BuyListItem> buyListItems = new HashSet<>();
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;
-
 
     public void setBuyListId(long buyListId) {
         this.buyListId = buyListId;
@@ -81,13 +77,6 @@ public class BuyList {
         }
     }
 
-//    public void setUser(User user) {
-//        this.user = user;
-//        if (user != null) {
-//            user.setBuyList(this);
-//        }
-//    }
-
     public int getTotalBuyListPrice() {
         int price = 0;
         for(BuyListItem item: buyListItems)
@@ -106,9 +95,5 @@ public class BuyList {
     public Set<BuyListItem> getBuyListItems() {
         return buyListItems;
     }
-
-//    public User getUser() {
-//        return user;
-//    }
 
 }

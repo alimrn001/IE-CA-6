@@ -1,6 +1,8 @@
 package com.baloot.baloot;
 
 import com.baloot.baloot.HTTPReqHandler.HTTPReqHandler;
+import com.baloot.baloot.Repository.BuyList.BuyListItemRepository;
+import com.baloot.baloot.Repository.BuyList.BuyListRepository;
 import com.baloot.baloot.Repository.Comment.CommentRepository;
 import com.baloot.baloot.Repository.Comment.VoteRepository;
 import com.baloot.baloot.Repository.Commodity.CommodityRepository;
@@ -14,6 +16,8 @@ import com.baloot.baloot.domain.Baloot.Exceptions.*;
 import com.baloot.baloot.domain.Baloot.Utilities.EmailParser;
 import com.baloot.baloot.domain.Baloot.Utilities.LocalDateAdapter;
 
+import com.baloot.baloot.models.BuyList.BuyList;
+import com.baloot.baloot.models.BuyList.BuyListItem;
 import com.baloot.baloot.models.DiscountCoupon.DiscountCoupon;
 import com.baloot.baloot.models.Comment.*;
 import com.baloot.baloot.models.User.User;
@@ -61,11 +65,15 @@ public class BalootService {
 
     private final VoteRepository voteRepository;
 
+    private final BuyListItemRepository buyListItemRepository;
+
+    private final BuyListRepository buyListRepository;
+
     @Autowired
     private BalootService(UserRepository userRepository_, ProviderRepository providerRepository_,
                           CommodityRepository commodityRepository_, CommentRepository commentRepository_,
                           DiscountCouponRepository discountCouponRepository_ , RatingRepository ratingRepository_,
-                          VoteRepository voteRepository_) {
+                          VoteRepository voteRepository_, BuyListRepository buyListRepository_, BuyListItemRepository buyListItemRepository_) {
         userRepository       = userRepository_;
         providerRepository   = providerRepository_;
         commodityRepository  = commodityRepository_;
@@ -73,6 +81,8 @@ public class BalootService {
         discountCouponRepository = discountCouponRepository_;
         ratingRepository = ratingRepository_;
         voteRepository = voteRepository_;
+        buyListItemRepository = buyListItemRepository_;
+        buyListRepository = buyListRepository_;
         initializeDataBase(usersURL, providersURL, commoditiesURL, commentsURL, discountCouponsURL);
     }
 
@@ -376,6 +386,30 @@ public class BalootService {
             oldVote.setVote(voteValue);
             voteRepository.save(oldVote);
         }
+    }
+
+    public void addItemToBuyList(User user, Commodity commodity, int quantity) {
+        List<BuyListItem> userBuyList = buyListItemRepository.findByUser_Username(user.getUsername());;
+        if(userBuyList.size()==0) {
+            BuyList buyList = new BuyList();
+            buyListRepository.save(buyList);
+            BuyListItem buyListItem = new BuyListItem(user, commodity, buyList, quantity);
+            buyListItemRepository.save(buyListItem);
+        }
+        else {
+            BuyList userBL = userBuyList.get(0).getBuyList();
+            BuyListItem item = buyListItemRepository.getBuyListItemByUserAndCommodityAndBuyList(user, commodity, userBL);
+            if(item==null) {
+                BuyListItem buyListItem = new BuyListItem(user, commodity, userBL, quantity);
+                buyListItemRepository.save(buyListItem);
+            }
+            else {
+                int previousQuantity = item.getQuantity();
+                item.setQuantity(previousQuantity + quantity);
+                buyListItemRepository.save(item);
+            }
+        }
+
     }
 
 }

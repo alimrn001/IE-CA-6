@@ -1,4 +1,4 @@
-package com.baloot.baloot.services.commodities;
+package com.baloot.baloot.services.comments;
 
 import com.baloot.baloot.BalootService;
 import com.baloot.baloot.DTO.CommentDTO;

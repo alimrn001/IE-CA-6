@@ -9,10 +9,6 @@ public interface BuyListRepository extends JpaRepository<BuyList, Long> {
 
     BuyList getBuyListByBuyListId(long buyListId);
 
-//    BuyList getBuyListByUserUsername(String username);
-//
-//    BuyList getBuyListByUserUsernameAndBuyListItemsIsBoughtFalse(String username);
-//
-//    BuyList getBuyListByUserUsernameAndBuyListItemsIsBoughtTrue(String username);
+
 
 }
