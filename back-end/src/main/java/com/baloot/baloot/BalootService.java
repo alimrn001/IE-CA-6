@@ -274,6 +274,10 @@ public class BalootService {
         return commentRepository.getCommentsByCommodity_Id(commodityId);
     }
 
+    public List<BuyListItem> getUserBuyList(String username) {
+        return buyListItemRepository.findByUser_Username(username);
+    }
+
     public Rating getRating(String username, int commodityId) {
         return ratingRepository.getRatingByUserUsernameAndCommodity_Id(username, commodityId);
     }

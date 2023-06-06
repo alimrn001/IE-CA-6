@@ -20,8 +20,6 @@ public class BuyListItem {
     @JoinColumn(name = "buy_list_id")
     private BuyList buyList;
 
-//    private int price;
-
     private Integer quantity;
 
     @ManyToOne
@@ -44,10 +42,6 @@ public class BuyListItem {
     public void setCommodity(Commodity commodity) {
         this.commodity = commodity;
     }
-
-//    public void setPrice(int price) {
-//        this.price = price;
-//    }
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
@@ -81,17 +75,9 @@ public class BuyListItem {
         return commodity;
     }
 
-//    public int getPrice() {
-//        return price;
-//    }
-
     public Integer getQuantity() {
         return quantity;
     }
-
-//    public BigDecimal getTotalCost() {
-//        return price.multiply(BigDecimal.valueOf(quantity));
-//    }
 
     public BuyList getBuyList() {
         return buyList;

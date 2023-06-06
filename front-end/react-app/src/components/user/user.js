@@ -73,6 +73,8 @@ class User extends Component {
         },
       ],
 
+      cartCommodities2: [],
+
       historyTableData: [
         {
           img: spaghettiImg,
@@ -123,7 +125,13 @@ class User extends Component {
           let likedCommentsId = [];
           let dislikedCommentsId = [];
           let usedCouponsId = [];
+          let userBuyList = [];
           console.log(resp.data.userInfo);
+          console.log(resp.data.cartCommodities);
+
+          Object.keys(resp.data.cartCommodities).forEach((item) => {
+            userBuyList.push(resp.data.cartCommodities[item]);
+          });
 
           Object.keys(resp.data.userInfo.buyList).forEach((item) => {
             buylistCommoditiesId.push(resp.data.userInfo.buyList[item]);
@@ -171,9 +179,11 @@ class User extends Component {
                 disliked: dislikedCommentsId,
                 userCoupons: usedCouponsId,
               },
+              cartCommodities2: userBuyList,
             },
             () => {
               console.log(this.state.userInfo);
+              console.log(this.state.cartCommodities2);
             }
           );
         }
@@ -254,12 +264,12 @@ class User extends Component {
             <img src={cartImg} class="cart-img" alt="" /> Cart
           </h3>
           <CartTable
-            cartCommodities={this.state.cartCommodities}
+            cartCommodities={this.state.cartCommodities2}
             updateItemCount={this.updateCartCommoditiesCount}
           />
           <div class="row">
             <PopUp1
-              cartCommodities={this.state.cartCommodities}
+              cartCommodities={this.state.cartCommodities2}
               cartCommoditiesCount={this.state.cartCommoditiesCount}
             />
           </div>

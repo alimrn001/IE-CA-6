@@ -1,6 +1,7 @@
 package com.baloot.baloot.controllers.user;
 
 import com.baloot.baloot.BalootService;
+import com.baloot.baloot.DTO.BuyListItemDTO;
 import com.baloot.baloot.DTO.UserDTO;
 import com.baloot.baloot.domain.Baloot.Baloot;
 import com.baloot.baloot.domain.Baloot.Commodity.Commodity;
@@ -8,6 +9,7 @@ import com.baloot.baloot.domain.Baloot.Exceptions.NegativeCreditAddingException;
 import com.baloot.baloot.domain.Baloot.Exceptions.UserNotExistsException;
 
 import com.baloot.baloot.models.User.User;
+import com.baloot.baloot.services.buylists.BuyListService;
 import com.baloot.baloot.services.commodities.CommodityService;
 import com.baloot.baloot.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BuyListService buyListService;
+
     @GetMapping("/user")
     public ResponseEntity getUserData() throws IOException {
         if(!balootService.userIsLoggedIn())
@@ -40,8 +45,10 @@ public class UserController {
         try {
             String loggedInUsername = balootService.getLoggedInUser().getUsername();
             UserDTO user = userService.getBalootUser(loggedInUsername);
+            List<BuyListItemDTO> buylist = buyListService.getBuyListItems(loggedInUsername);
             Map<String, Object> responseMap = new HashMap<>();
             responseMap.put("userInfo", user);
+            responseMap.put("cartCommodities", buylist);
             return ResponseEntity.status(HttpStatus.OK).body(responseMap);
         }
         catch (Exception e) {
