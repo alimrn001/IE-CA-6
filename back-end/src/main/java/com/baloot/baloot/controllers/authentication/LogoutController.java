@@ -14,7 +14,6 @@ public class LogoutController {
 
     @PostMapping("/logout")
     public ResponseEntity logout() {
-        System.out.println("reached logout");
         try {
             logoutService.handleLogout();
             return ResponseEntity.ok("ok");

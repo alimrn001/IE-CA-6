@@ -3,6 +3,7 @@ package com.baloot.baloot.controllers.providers;
 import com.baloot.baloot.services.BalootService;
 import com.baloot.baloot.DTO.CommodityDTO;
 import com.baloot.baloot.DTO.ProviderDTO;
+import com.baloot.baloot.services.buylists.BuyListService;
 import com.baloot.baloot.services.commodities.CommodityService;
 import com.baloot.baloot.services.providers.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class ProvidersController {
     @Autowired
     private CommodityService commodityService;
 
+    @Autowired
+    private BuyListService buyListService;
+
     @GetMapping("/{providerId}")
     public ResponseEntity getProvider(@PathVariable String providerId) throws IOException {
         if(!balootService.userIsLoggedIn())
@@ -39,7 +43,7 @@ public class ProvidersController {
         try {
             Map<String, Object> responseMap = new HashMap<>();
             String loggedInUsername = balootService.getLoggedInUser().getUsername();
-            int cartSize = 2; //for test cause there is still no buylist !
+            int cartSize = buyListService.getUserCurrentBuyList(loggedInUsername).size();; //for test cause there is still no buylist !
             ProviderDTO provider = providerService.getBalootProvider(Integer.parseInt(providerId));
             List<CommodityDTO> providedCommodities = commodityService.getProviderCommodities(Integer.parseInt(providerId));
             responseMap.put("loggedInUsername", loggedInUsername);

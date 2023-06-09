@@ -53,7 +53,7 @@ public class commoditiesController {
         try {
             Map<String, Object> responseMap = new HashMap<>();
             String loggedInUsername = balootService.getLoggedInUser().getUsername();
-            int cartSize = 2; //for now later to be replaced bu buylist
+            int cartSize = buyListService.getUserCurrentBuyList(loggedInUsername).size();
             CommodityDTO commodity = commodityService.getCommodityById(Integer.parseInt(commodityId));
             Map<Integer, CommentDTO> comments = commentService.getCommodityComments(Integer.parseInt(commodityId));
             Provider provider = balootService.getProviderById(commodity.getProviderId());
@@ -82,7 +82,6 @@ public class commoditiesController {
         try {
             String loggedInUser = balootService.getLoggedInUser().getUsername();
             balootService.addComment(loggedInUser, Integer.parseInt(payLoad.get("commodity").toString()), LocalDate.now().toString(), payLoad.get("text").toString());
-            Baloot.getInstance().addCommentByUserInput(loggedInUser, Integer.parseInt(payLoad.get("commodity").toString()), payLoad.get("text").toString());
             return ResponseEntity.status(HttpStatus.OK).body("ok");
         }
         catch (Exception e) {
